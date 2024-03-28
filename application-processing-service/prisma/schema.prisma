@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+model Application {
+  application_id        Int @id @default(autoincrement())
+  applicant_detail_id   Int
+  beneficiary_detail_id Int
+
+  bankName       String
+  amount         String
+  collateralFile Bytes?
+  currency       String   @db.VarChar(3)
+  effectiveDate  DateTime
+  status         Status
+  purpose        String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ApplicantDetail   ApplicantDetail   @relation(fields: [applicant_detail_id], references: [applicant_detail_id])
+  BeneficiaryDetail BeneficiaryDetail @relation(fields: [beneficiary_detail_id], references: [beneficiary_detail_id])
+}
+
+model ApplicantDetail {
+  applicant_detail_id        Int    @id @default(autoincrement())
+  businessName               String
+  businessRegistrationNumber String
+  businessAddress            String
+
+  debitAccountNo    String
+  contactPersonName String
+  citizenID         String
+  applicantEmail    String
+
+  Applications Application[]
+}
+
+model BeneficiaryDetail {
+  beneficiary_detail_id      Int    @id @default(autoincrement())
+  businessName               String
+  businessRegistrationNumber String
+  businessAddress            String
+  email                      String
+
+  Applications Application[]
+}
