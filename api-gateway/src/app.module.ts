@@ -1,25 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'AUTH_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: [
-            'amqps://qjhoubol:O9nigZMk8fyzVI8KwS4AWeH0NMPeVDvp@moose.rmq.cloudamqp.com/qjhoubol',
-          ],
-          queue: 'main_queue',
-          queueOptions: {
-            durable: false,
-          },
-        },
-      },
-    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    AuthModule,
+    ApplicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

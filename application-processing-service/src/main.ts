@@ -1,27 +1,21 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   app.enableCors();
-//   app.connectMicroservice<MicroserviceOptions>({
-//     transport: Transport.RMQ,
-//     options: {
-//       urls: [
-//         'amqps://qjhoubol:O9nigZMk8fyzVI8KwS4AWeH0NMPeVDvp@moose.rmq.cloudamqp.com/qjhoubol',
-//       ], // main queue
-//       queue: 'main_queue',
-//       queueOptions: {
-//         durable: false,
-//       },
-//     },
-//   });
-//   await app.listen(3333);
-// }
-
+import { ValidationPipe } from '@nestjs/common';
+import { Transport } from '@nestjs/microservices';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  await app.listen(3333);
+  const app = await NestFactory.createMicroservice(AppModule, {
+    transport: Transport.TCP,
+    options: {
+      host: '127.0.0.1',
+      port: 8889,
+    },
+  });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
+  app.listen();
+  console.log('Application service is listening on port 8889');
 }
 bootstrap();

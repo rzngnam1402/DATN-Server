@@ -26,45 +26,46 @@ export class AuthService {
           address: dto.address,
         },
       });
-      return this.signToken(user.id, user.email);
+      return this.signToken(user.id, user.email, user.role);
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
-          throw new ForbiddenException('Credentials taken');
+          return new ForbiddenException('Credentials taken');
         }
       }
-      throw err;
+      return err;
     }
   }
 
   async signin(dto: AuthDto) {
-    // find the user by email
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
       },
     });
 
-    // if user does not exist, throw exception
     if (!user) {
-      throw new ForbiddenException('Credentials incorrect');
+      return new ForbiddenException('Credentials incorrect');
     }
 
-    const pwMatches = await argon.verify(user.hash, dto.password);
+    const hash = await argon.verify(user.hash, dto.password);
 
-    if (!pwMatches) {
-      throw new ForbiddenException('Credentials incorrect');
+    if (!hash) {
+      return new ForbiddenException('Credentials incorrect');
     }
-    return this.signToken(user.id, user.email);
+
+    return this.signToken(user.id, user.email, user.role);
   }
 
   async signToken(
     userId: number,
     email: string,
+    role: string,
   ): Promise<{ access_token: string }> {
     const payload = {
       sub: userId,
       email,
+      role,
     };
 
     const secret = this.config.get('JWT_SECRET');

@@ -1,31 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   app.useGlobalPipes(
-//     new ValidationPipe({
-//       whitelist: true,
-//     }),
-//   );
-//   app.enableCors();
-//   await app.listen(3333);
-// }
+import { Transport } from '@nestjs/microservices';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
+  const app = await NestFactory.createMicroservice(AppModule, {
+    transport: Transport.TCP,
     options: {
-      urls: [
-        'amqps://qjhoubol:O9nigZMk8fyzVI8KwS4AWeH0NMPeVDvp@moose.rmq.cloudamqp.com/qjhoubol',
-      ],
-      queue: 'main_queue',
-      queueOptions: {
-        durable: false,
-      },
+      host: '127.0.0.1',
+      port: 8888,
     },
   });
   app.useGlobalPipes(
@@ -33,8 +15,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.listen();
 
-  // await app.listen(3333);
-  console.log(`Authentication service is running`);
+  console.log('Authentication service is listening on port 8888');
 }
 bootstrap();

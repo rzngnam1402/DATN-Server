@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -8,5 +9,11 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @MessagePattern({ cmd: 'ping' })
+  handlePing(data: any): string {
+    console.log('Ping received', data);
+    return 'pong';
   }
 }
