@@ -26,7 +26,7 @@ model Application {
 
   bankName       String
   amount         String
-  collateralFile Bytes?
+  collateralFile String
   currency       String   @db.VarChar(3)
   effectiveDate  DateTime
   status         Status
@@ -35,8 +35,8 @@ model Application {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ApplicantDetail   ApplicantDetail   @relation(fields: [applicant_detail_id], references: [applicant_detail_id])
-  BeneficiaryDetail BeneficiaryDetail @relation(fields: [beneficiary_detail_id], references: [beneficiary_detail_id])
+  ApplicantDetail   ApplicantDetail   @relation(fields: [applicant_detail_id], references: [applicant_detail_id], onDelete: Cascade)
+  BeneficiaryDetail BeneficiaryDetail @relation(fields: [beneficiary_detail_id], references: [beneficiary_detail_id], onDelete: Cascade)
 }
 
 model ApplicantDetail {

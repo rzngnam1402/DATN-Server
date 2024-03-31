@@ -24,6 +24,9 @@ let AppController = class AppController {
         console.log('Ping received', data);
         return 'pong';
     }
+    create_2(data) {
+        console.log('create_requested', data);
+    }
 };
 exports.AppController = AppController;
 __decorate([
@@ -38,6 +41,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", String)
 ], AppController.prototype, "handlePing", null);
+__decorate([
+    (0, microservices_1.MessagePattern)('create'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "create_2", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService])

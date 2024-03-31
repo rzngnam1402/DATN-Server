@@ -1,5 +1,4 @@
 /// <reference types="multer" />
-/// <reference types="node" />
 import { PrismaService } from '../prisma/prisma.service';
 import { ApplicationDto } from 'src/dto/application.dto';
 export declare class ApplicationsService {
@@ -11,7 +10,7 @@ export declare class ApplicationsService {
         beneficiary_detail_id: number;
         bankName: string;
         amount: string;
-        collateralFile: Buffer;
+        collateralFile: string;
         currency: string;
         effectiveDate: Date;
         status: import(".prisma/client").$Enums.Status;
@@ -25,7 +24,7 @@ export declare class ApplicationsService {
         beneficiary_detail_id: number;
         bankName: string;
         amount: string;
-        collateralFile: Buffer;
+        collateralFile: string;
         currency: string;
         effectiveDate: Date;
         status: import(".prisma/client").$Enums.Status;

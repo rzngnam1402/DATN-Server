@@ -1,17 +1,14 @@
-/// <reference types="multer" />
-/// <reference types="node" />
 import { ApplicationsService } from './application.service';
-import { ApplicationDto } from 'src/dto/application.dto';
 export declare class ApplicationController {
     private applicationsService;
     constructor(applicationsService: ApplicationsService);
-    create(dto: ApplicationDto, collateralFile: Express.Multer.File[]): Promise<{
+    handleCreate(payload: any): Promise<{
         application_id: number;
         applicant_detail_id: number;
         beneficiary_detail_id: number;
         bankName: string;
         amount: string;
-        collateralFile: Buffer;
+        collateralFile: string;
         currency: string;
         effectiveDate: Date;
         status: import(".prisma/client").$Enums.Status;
@@ -25,7 +22,7 @@ export declare class ApplicationController {
         beneficiary_detail_id: number;
         bankName: string;
         amount: string;
-        collateralFile: Buffer;
+        collateralFile: string;
         currency: string;
         effectiveDate: Date;
         status: import(".prisma/client").$Enums.Status;

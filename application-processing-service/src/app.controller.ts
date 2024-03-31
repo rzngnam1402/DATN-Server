@@ -16,4 +16,9 @@ export class AppController {
     console.log('Ping received', data);
     return 'pong';
   }
+
+  @MessagePattern('create')
+  create_2(data: any) {
+    console.log('create_requested', data);
+  }
 }

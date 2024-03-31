@@ -8,21 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationController = void 0;
 const common_1 = require("@nestjs/common");
 const application_service_1 = require("./application.service");
-const platform_express_1 = require("@nestjs/platform-express");
-const application_dto_1 = require("../dto/application.dto");
+const microservices_1 = require("@nestjs/microservices");
 let ApplicationController = class ApplicationController {
     constructor(applicationsService) {
         this.applicationsService = applicationsService;
     }
-    async create(dto, collateralFile) {
-        return this.applicationsService.create(dto, collateralFile);
+    handleCreate(payload) {
+        const dto = payload.data;
+        const file = payload.collateralFile;
+        console.log(dto, payload.collateralFile);
+        return this.applicationsService.create(dto, file);
     }
     async getAll() {
         return this.applicationsService.getAll();
@@ -30,14 +29,11 @@ let ApplicationController = class ApplicationController {
 };
 exports.ApplicationController = ApplicationController;
 __decorate([
-    (0, common_1.Post)('create'),
-    (0, common_1.UseInterceptors)((0, platform_express_1.AnyFilesInterceptor)()),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.UploadedFiles)()),
+    (0, microservices_1.MessagePattern)({ cmd: 'create' }),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [application_dto_1.ApplicationDto, Array]),
-    __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "create", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ApplicationController.prototype, "handleCreate", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

@@ -4,4 +4,5 @@ export declare class AppController {
     constructor(appService: AppService);
     getHello(): string;
     handlePing(data: any): string;
+    create_2(data: any): void;
 }
