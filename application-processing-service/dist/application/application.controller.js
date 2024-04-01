@@ -23,7 +23,9 @@ let ApplicationController = class ApplicationController {
         console.log(dto, payload.collateralFile);
         return this.applicationsService.create(dto, file);
     }
-    async getAll() {
+    handleGetAll(payload) {
+        const data = payload;
+        console.log(data);
         return this.applicationsService.getAll();
     }
 };
@@ -35,11 +37,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ApplicationController.prototype, "handleCreate", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, microservices_1.MessagePattern)({ cmd: 'get-all' }),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], ApplicationController.prototype, "getAll", null);
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ApplicationController.prototype, "handleGetAll", null);
 exports.ApplicationController = ApplicationController = __decorate([
     (0, common_1.Controller)('applications'),
     __metadata("design:paramtypes", [application_service_1.ApplicationsService])

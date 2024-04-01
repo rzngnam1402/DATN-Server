@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
 import { ApplicationsService } from './application.service';
 import { MessagePattern } from '@nestjs/microservices';
@@ -6,15 +6,6 @@ import { MessagePattern } from '@nestjs/microservices';
 @Controller('applications')
 export class ApplicationController {
   constructor(private applicationsService: ApplicationsService) {}
-
-  // @Post('create')
-  // @UseInterceptors(AnyFilesInterceptor())
-  // async create(
-  //   @Body() dto: ApplicationDto,
-  //   @UploadedFiles() collateralFile: Express.Multer.File[],
-  // ) {
-  //   return this.applicationsService.create(dto, collateralFile);
-  // }
 
   @MessagePattern({ cmd: 'create' })
   handleCreate(payload: any) {
@@ -24,8 +15,10 @@ export class ApplicationController {
     return this.applicationsService.create(dto, file);
   }
 
-  @Get()
-  async getAll() {
+  @MessagePattern({ cmd: 'get-all' })
+  handleGetAll(payload: any) {
+    const data = payload;
+    console.log(data);
     return this.applicationsService.getAll();
   }
 }

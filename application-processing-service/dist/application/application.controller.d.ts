@@ -16,7 +16,7 @@ export declare class ApplicationController {
         createdAt: Date;
         updatedAt: Date;
     }>;
-    getAll(): Promise<{
+    handleGetAll(payload: any): Promise<{
         application_id: number;
         applicant_detail_id: number;
         beneficiary_detail_id: number;

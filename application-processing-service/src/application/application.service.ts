@@ -9,7 +9,10 @@ export class ApplicationsService {
 
   async create(dto: ApplicationDto, collateralFile: Express.Multer.File[]) {
     const effectiveDate = new Date(dto.effectiveDate);
-    const file = JSON.stringify(collateralFile[0]);
+    let file = null;
+    if (collateralFile) {
+      file = JSON.stringify(collateralFile[0]);
+    }
     const applicationData = {
       bankName: dto.bankName,
       amount: dto.amount,
@@ -17,7 +20,7 @@ export class ApplicationsService {
       effectiveDate,
       purpose: dto.purpose,
       status: ApplicationStatus.UNDER_REVIEW,
-      collateralFile: file ? file : null,
+      collateralFile: file,
 
       // Relational data
       ApplicantDetail: {

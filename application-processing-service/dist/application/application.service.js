@@ -19,7 +19,10 @@ let ApplicationsService = class ApplicationsService {
     }
     async create(dto, collateralFile) {
         const effectiveDate = new Date(dto.effectiveDate);
-        const file = JSON.stringify(collateralFile[0]);
+        let file = null;
+        if (collateralFile) {
+            file = JSON.stringify(collateralFile[0]);
+        }
         const applicationData = {
             bankName: dto.bankName,
             amount: dto.amount,
@@ -27,7 +30,7 @@ let ApplicationsService = class ApplicationsService {
             effectiveDate,
             purpose: dto.purpose,
             status: status_enum_1.ApplicationStatus.UNDER_REVIEW,
-            collateralFile: file ? file : null,
+            collateralFile: file,
             ApplicantDetail: {
                 create: {
                     businessName: dto.businessName,

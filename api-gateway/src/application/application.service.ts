@@ -25,4 +25,10 @@ export class ApplicationService {
     const payload = { data: data.body, collateralFile };
     return this.applicationClient.send(pattern, payload);
   }
+
+  getAllApplications(@Req() data: Request) {
+    const pattern = { cmd: 'get-all' };
+    const payload = data.body;
+    return this.applicationClient.send(pattern, payload);
+  }
 }

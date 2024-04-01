@@ -26,6 +26,7 @@ export class ApplicationController {
     return this.applicationService.pingApplicationService();
   }
 
+  @Roles(Role.CLIENT, Role.ADMIN)
   @Post('create')
   @UseInterceptors(AnyFilesInterceptor())
   async create(
@@ -33,5 +34,11 @@ export class ApplicationController {
     @UploadedFiles() collateralFile: Express.Multer.File,
   ) {
     return this.applicationService.create(data, collateralFile);
+  }
+
+  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Get('all')
+  async getAllApplications(@Req() data: Request) {
+    return this.applicationService.getAllApplications(data);
   }
 }

@@ -26,7 +26,7 @@ model Application {
 
   bankName       String
   amount         String
-  collateralFile String
+  collateralFile String?
   currency       String   @db.VarChar(3)
   effectiveDate  DateTime
   status         Status
