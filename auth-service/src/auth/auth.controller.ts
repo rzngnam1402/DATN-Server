@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Post } from '@nestjs/common';
+import { Controller, ForbiddenException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { MessagePattern } from '@nestjs/microservices';
@@ -8,21 +8,14 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @MessagePattern({ cmd: 'signup' })
-  hadnleSignup(dto: AuthDto): Promise<{ access_token: string }> {
-    console.log('Signup requested', dto);
+  handleSignup(dto: AuthDto): Promise<{ access_token: string }> {
     return this.authService.signup(dto);
   }
 
   @MessagePattern({ cmd: 'signin' })
-  hadnleSignin(
+  handleSignin(
     dto: AuthDto,
   ): Promise<{ access_token: string } | ForbiddenException> {
-    console.log('Signin requested', dto);
-    return this.authService.signin(dto);
-  }
-
-  @Post('signin')
-  signin(@Body() dto: AuthDto) {
     return this.authService.signin(dto);
   }
 }

@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Global, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon from 'argon2';
@@ -6,6 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto';
 import { ConfigService } from '@nestjs/config';
 
+@Global()
 @Injectable()
 export class AuthService {
   constructor(
@@ -26,7 +27,7 @@ export class AuthService {
           address: dto.address,
         },
       });
-      return this.signToken(user.id, user.email, user.role);
+      return this.signToken(user.id, user.email, user.username, user.role);
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
@@ -54,17 +55,19 @@ export class AuthService {
       return new ForbiddenException('Credentials incorrect');
     }
 
-    return this.signToken(user.id, user.email, user.role);
+    return this.signToken(user.id, user.email, user.username, user.role);
   }
 
   async signToken(
     userId: number,
     email: string,
+    username: string,
     role: string,
   ): Promise<{ access_token: string }> {
     const payload = {
       sub: userId,
       email,
+      username,
       role,
     };
 
@@ -81,11 +84,11 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<any> {
     try {
-      console.log('verifying token..');
-      const decoded = this.jwt.verify(token);
+      const secret = this.config.get('JWT_SECRET');
+      const decoded = this.jwt.verify(token, { secret: secret });
       return decoded ? { isValid: true, decoded } : { isValid: false };
     } catch (error) {
-      return { isValid: false };
+      return error;
     }
   }
 }

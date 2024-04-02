@@ -1,17 +1,13 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
-import { GetUser } from 'src/auth/decorator';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { JwtGuard } from 'src/auth/guard';
-import { RolesGuard } from 'src/auth/guard/role.guard';
-import { Role } from 'src/auth/role/roles.enum';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
+import { UserService } from './user.service';
 
-@UseGuards(JwtGuard, RolesGuard)
 @Controller('users')
 export class UserController {
-  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
-  @Get('me')
-  getMe(@GetUser() user: User) {
-    return user;
+  constructor(private userService: UserService) {}
+
+  @MessagePattern({ cmd: 'get-me' })
+  async handleGetMe(token: string) {
+    return this.userService.getMe(token);
   }
 }
