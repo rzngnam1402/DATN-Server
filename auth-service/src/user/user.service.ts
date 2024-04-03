@@ -19,4 +19,10 @@ export class UserService {
     delete user.hash;
     return user;
   }
+
+  async getAllUsers() {
+    const allUsers = await this.prisma.user.findMany();
+    allUsers.map((user) => delete user.hash);
+    return allUsers;
+  }
 }

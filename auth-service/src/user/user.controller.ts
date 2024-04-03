@@ -10,4 +10,9 @@ export class UserController {
   async handleGetMe(token: string) {
     return this.userService.getMe(token);
   }
+
+  @MessagePattern({ cmd: 'get-all-user' })
+  async handleGetAllUsers() {
+    return this.userService.getAllUsers();
+  }
 }
