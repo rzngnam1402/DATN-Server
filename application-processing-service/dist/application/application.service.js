@@ -55,9 +55,31 @@ let ApplicationsService = class ApplicationsService {
             data: applicationData,
         });
     }
-    async getAll() {
-        const response = await this.prisma.application.findMany();
-        return response;
+    async getAllApplicationsUser(email) {
+        const res = await this.prisma.application.findMany({
+            where: {
+                ApplicantDetail: {
+                    applicantEmail: email,
+                },
+            },
+            include: {
+                ApplicantDetail: true,
+                BeneficiaryDetail: true,
+            },
+        });
+        return res;
+    }
+    async getAllApplicationsBanker(company) {
+        const res = await this.prisma.application.findMany({
+            where: {
+                bankName: company,
+            },
+            include: {
+                ApplicantDetail: true,
+                BeneficiaryDetail: true,
+            },
+        });
+        return res;
     }
 };
 exports.ApplicationsService = ApplicationsService;

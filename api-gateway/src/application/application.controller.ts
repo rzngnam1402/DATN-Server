@@ -14,6 +14,7 @@ import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { RolesGuard } from 'src/auth/guard';
 import { Request } from 'express';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { GetUser } from 'src/auth/decorator';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('application')
@@ -36,9 +37,16 @@ export class ApplicationController {
     return this.applicationService.create(data, collateralFile);
   }
 
-  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
-  @Get('all')
-  async getAllApplications(@Req() data: Request) {
-    return this.applicationService.getAllApplications(data);
+  // get all application from user
+  @Roles(Role.CLIENT, Role.ADMIN)
+  @Get('user/all')
+  async getAllApplicationsUser(@GetUser() user: any) {
+    return this.applicationService.getAllApplicationsUser(user);
+  }
+
+  @Roles(Role.BANKER, Role.ADMIN)
+  @Get('banker/all')
+  async getAllApplicationsBanker(@GetUser() user: any) {
+    return this.applicationService.getAllApplicationsBanker(user);
   }
 }

@@ -23,10 +23,13 @@ let ApplicationController = class ApplicationController {
         console.log(dto, payload.collateralFile);
         return this.applicationsService.create(dto, file);
     }
-    handleGetAll(payload) {
+    handleGetAllApplicationsUser(payload) {
         const data = payload;
-        console.log(data);
-        return this.applicationsService.getAll();
+        return this.applicationsService.getAllApplicationsUser(data);
+    }
+    handleGetAllApplicationsBanker(payload) {
+        const data = payload;
+        return this.applicationsService.getAllApplicationsBanker(data);
     }
 };
 exports.ApplicationController = ApplicationController;
@@ -37,11 +40,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ApplicationController.prototype, "handleCreate", null);
 __decorate([
-    (0, microservices_1.MessagePattern)({ cmd: 'get-all' }),
+    (0, microservices_1.MessagePattern)({ cmd: 'get-all-apps-user' }),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], ApplicationController.prototype, "handleGetAll", null);
+], ApplicationController.prototype, "handleGetAllApplicationsUser", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'get-all-apps-banker' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ApplicationController.prototype, "handleGetAllApplicationsBanker", null);
 exports.ApplicationController = ApplicationController = __decorate([
     (0, common_1.Controller)('applications'),
     __metadata("design:paramtypes", [application_service_1.ApplicationsService])

@@ -15,10 +15,15 @@ export class ApplicationController {
     return this.applicationsService.create(dto, file);
   }
 
-  @MessagePattern({ cmd: 'get-all' })
-  handleGetAll(payload: any) {
+  @MessagePattern({ cmd: 'get-all-apps-user' })
+  handleGetAllApplicationsUser(payload: string) {
     const data = payload;
-    console.log(data);
-    return this.applicationsService.getAll();
+    return this.applicationsService.getAllApplicationsUser(data);
+  }
+
+  @MessagePattern({ cmd: 'get-all-apps-banker' })
+  handleGetAllApplicationsBanker(payload: string) {
+    const data = payload;
+    return this.applicationsService.getAllApplicationsBanker(data);
   }
 }

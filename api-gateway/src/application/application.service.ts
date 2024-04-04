@@ -26,9 +26,15 @@ export class ApplicationService {
     return this.applicationClient.send(pattern, payload);
   }
 
-  getAllApplications(@Req() data: Request) {
-    const pattern = { cmd: 'get-all' };
-    const payload = data.body;
+  getAllApplicationsUser(user: any) {
+    const pattern = { cmd: 'get-all-apps-user' };
+    const payload = user.email;
+    return this.applicationClient.send(pattern, payload);
+  }
+
+  getAllApplicationsBanker(user: any) {
+    const pattern = { cmd: 'get-all-apps-banker' };
+    const payload = user.company;
     return this.applicationClient.send(pattern, payload);
   }
 }

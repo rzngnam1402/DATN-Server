@@ -25,9 +25,16 @@ export class AuthService {
           // birthday: new Date(dto.birthday),
           phone: dto.phone,
           address: dto.address,
+          company: dto.company,
         },
       });
-      return this.signToken(user.id, user.email, user.username, user.role);
+      return this.signToken(
+        user.id,
+        user.email,
+        user.username,
+        user.role,
+        user.company,
+      );
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
         if (err.code === 'P2002') {
@@ -55,7 +62,13 @@ export class AuthService {
       return new ForbiddenException('Credentials incorrect');
     }
 
-    return this.signToken(user.id, user.email, user.username, user.role);
+    return this.signToken(
+      user.id,
+      user.email,
+      user.username,
+      user.role,
+      user.company,
+    );
   }
 
   async signToken(
@@ -63,12 +76,14 @@ export class AuthService {
     email: string,
     username: string,
     role: string,
-  ): Promise<{ access_token: string }> {
+    company: string,
+  ): Promise<{ access_token: string; role: string }> {
     const payload = {
       sub: userId,
       email,
       username,
       role,
+      company,
     };
 
     const secret = this.config.get('JWT_SECRET');
@@ -79,6 +94,7 @@ export class AuthService {
     });
     return {
       access_token: token,
+      role: role,
     };
   }
 

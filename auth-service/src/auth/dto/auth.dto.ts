@@ -30,4 +30,8 @@ export class AuthDto {
   @IsString()
   @IsOptional()
   address: string;
+
+  @IsString()
+  @IsOptional()
+  company: string;
 }
