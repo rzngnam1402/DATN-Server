@@ -31,6 +31,10 @@ let ApplicationController = class ApplicationController {
         const data = payload;
         return this.applicationsService.getAllApplicationsBanker(data);
     }
+    handleGetApplicationById(payload) {
+        const data = payload;
+        return this.applicationsService.getApplicationById(data);
+    }
 };
 exports.ApplicationController = ApplicationController;
 __decorate([
@@ -51,6 +55,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ApplicationController.prototype, "handleGetAllApplicationsBanker", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'get-app-by-id' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], ApplicationController.prototype, "handleGetApplicationById", null);
 exports.ApplicationController = ApplicationController = __decorate([
     (0, common_1.Controller)('applications'),
     __metadata("design:paramtypes", [application_service_1.ApplicationsService])

@@ -13,6 +13,7 @@ exports.ApplicationsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const status_enum_1 = require("../enum/status.enum");
+const library_1 = require("@prisma/client/runtime/library");
 let ApplicationsService = class ApplicationsService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -80,6 +81,27 @@ let ApplicationsService = class ApplicationsService {
             },
         });
         return res;
+    }
+    async getApplicationById(id) {
+        try {
+            const res = await this.prisma.application.findFirstOrThrow({
+                where: {
+                    application_id: id,
+                },
+                include: {
+                    ApplicantDetail: true,
+                    BeneficiaryDetail: true,
+                },
+            });
+            return res;
+        }
+        catch (error) {
+            if (error instanceof library_1.PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    return new common_1.ForbiddenException('Applcation not found');
+                }
+            }
+        }
     }
 };
 exports.ApplicationsService = ApplicationsService;

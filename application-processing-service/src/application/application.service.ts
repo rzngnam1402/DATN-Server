@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ApplicationDto } from 'src/dto/application.dto';
 import { ApplicationStatus } from 'src/enum/status.enum';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class ApplicationsService {
@@ -75,5 +76,26 @@ export class ApplicationsService {
       },
     });
     return res;
+  }
+
+  async getApplicationById(id: number) {
+    try {
+      const res = await this.prisma.application.findFirstOrThrow({
+        where: {
+          application_id: id,
+        },
+        include: {
+          ApplicantDetail: true,
+          BeneficiaryDetail: true,
+        },
+      });
+      return res;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          return new ForbiddenException('Applcation not found');
+        }
+      }
+    }
   }
 }

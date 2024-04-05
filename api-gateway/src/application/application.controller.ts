@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Param,
   Post,
   Req,
   UploadedFiles,
@@ -48,5 +49,11 @@ export class ApplicationController {
   @Get('banker/all')
   async getAllApplicationsBanker(@GetUser() user: any) {
     return this.applicationService.getAllApplicationsBanker(user);
+  }
+
+  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Get(':id')
+  async getApplicationById(@Param('id') id: string) {
+    return this.applicationService.getApplicationById(id);
   }
 }

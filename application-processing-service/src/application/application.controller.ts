@@ -26,4 +26,10 @@ export class ApplicationController {
     const data = payload;
     return this.applicationsService.getAllApplicationsBanker(data);
   }
+
+  @MessagePattern({ cmd: 'get-app-by-id' })
+  handleGetApplicationById(payload: number) {
+    const data = payload;
+    return this.applicationsService.getApplicationById(data);
+  }
 }

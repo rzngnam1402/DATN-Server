@@ -37,4 +37,10 @@ export class ApplicationService {
     const payload = user.company;
     return this.applicationClient.send(pattern, payload);
   }
+
+  getApplicationById(id: string) {
+    const pattern = { cmd: 'get-app-by-id' };
+    const payload = Number(id);
+    return this.applicationClient.send(pattern, payload);
+  }
 }
