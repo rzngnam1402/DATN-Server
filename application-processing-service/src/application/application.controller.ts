@@ -32,4 +32,10 @@ export class ApplicationController {
     const data = payload;
     return this.applicationsService.getApplicationById(data);
   }
+
+  @MessagePattern({ cmd: 'update-app-by-id' })
+  handleUpdateApplicationById(payload: any) {
+    const { id, data } = payload;
+    return this.applicationsService.updateApplicationById(id, data);
+  }
 }

@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   UploadedFiles,
@@ -55,5 +56,11 @@ export class ApplicationController {
   @Get(':id')
   async getApplicationById(@Param('id') id: string) {
     return this.applicationService.getApplicationById(id);
+  }
+
+  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Patch(':id')
+  async updateApplicationById(@Param('id') id: string, @Req() data: Request) {
+    return this.applicationService.updateApplicationById(id, data);
   }
 }

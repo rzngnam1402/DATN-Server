@@ -115,4 +115,5 @@ export declare class ApplicationsService {
         createdAt: Date;
         updatedAt: Date;
     }) | ForbiddenException>;
+    updateApplicationById(id: number, dto: ApplicationDto): Promise<any>;
 }

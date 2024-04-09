@@ -112,4 +112,5 @@ export declare class ApplicationController {
         createdAt: Date;
         updatedAt: Date;
     })>;
+    handleUpdateApplicationById(payload: any): Promise<any>;
 }

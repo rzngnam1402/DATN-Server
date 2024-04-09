@@ -43,4 +43,10 @@ export class ApplicationService {
     const payload = Number(id);
     return this.applicationClient.send(pattern, payload);
   }
+
+  updateApplicationById(id: string, data: Request) {
+    const pattern = { cmd: 'update-app-by-id' };
+    const payload = { id: Number(id), data: data.body };
+    return this.applicationClient.send(pattern, payload);
+  }
 }

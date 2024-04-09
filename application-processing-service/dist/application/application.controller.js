@@ -35,6 +35,10 @@ let ApplicationController = class ApplicationController {
         const data = payload;
         return this.applicationsService.getApplicationById(data);
     }
+    handleUpdateApplicationById(payload) {
+        const { id, data } = payload;
+        return this.applicationsService.updateApplicationById(id, data);
+    }
 };
 exports.ApplicationController = ApplicationController;
 __decorate([
@@ -61,6 +65,12 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ApplicationController.prototype, "handleGetApplicationById", null);
+__decorate([
+    (0, microservices_1.MessagePattern)({ cmd: 'update-app-by-id' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ApplicationController.prototype, "handleUpdateApplicationById", null);
 exports.ApplicationController = ApplicationController = __decorate([
     (0, common_1.Controller)('applications'),
     __metadata("design:paramtypes", [application_service_1.ApplicationsService])
