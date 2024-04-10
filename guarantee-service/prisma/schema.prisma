@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  NOT_ISSUED
+  ISSUED
+}
+
+model Guarantee {
+  guarantee_id          Int @id @default(autoincrement())
+  applicant_detail_id   Int
+  beneficiary_detail_id Int
+
+  bankName       String
+  amount         String
+  collateralFile String?
+  currency       String   @db.VarChar(3)
+  startDate      DateTime
+  expiryDate     DateTime
+  status         Status   @default(NOT_ISSUED)
+  purpose        String
+  docURL         String?
+  signatureImg   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ApplicantDetail   ApplicantDetail   @relation(fields: [applicant_detail_id], references: [applicant_detail_id], onDelete: Cascade)
+  BeneficiaryDetail BeneficiaryDetail @relation(fields: [beneficiary_detail_id], references: [beneficiary_detail_id], onDelete: Cascade)
+
+  @@map("guarantees")
+}
+
+model ApplicantDetail {
+  applicant_detail_id        Int    @id @default(autoincrement())
+  businessName               String
+  businessRegistrationNumber String
+  businessAddress            String
+
+  debitAccountNo    String
+  contactPersonName String
+  citizenID         String
+  applicantEmail    String
+
+  Guarantees Guarantee[]
+}
+
+model BeneficiaryDetail {
+  beneficiary_detail_id      Int    @id @default(autoincrement())
+  businessName               String
+  businessRegistrationNumber String
+  businessAddress            String
+  email                      String
+
+  Guarantees Guarantee[]
+}

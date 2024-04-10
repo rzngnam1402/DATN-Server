@@ -2,20 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { ApplicationModule } from './application/application.module';
-import { UsersModule } from './auth/users/users.module';
-import { GuaranteeModule } from './guarantee/guarantee.module';
+import { PdfGeneratorModule } from './pdf-generator/pdf-generator.module';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    AuthModule,
-    ApplicationModule,
-    UsersModule,
-    GuaranteeModule,
+    PdfGeneratorModule,
+    FirebaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
