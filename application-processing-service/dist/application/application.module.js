@@ -16,7 +16,7 @@ exports.ApplicationModule = ApplicationModule;
 exports.ApplicationModule = ApplicationModule = __decorate([
     (0, common_1.Module)({
         controllers: [application_controller_1.ApplicationController],
-        providers: [application_service_1.ApplicationsService],
+        providers: [application_service_1.ApplicationService],
     })
 ], ApplicationModule);
 //# sourceMappingURL=application.module.js.map

@@ -14,10 +14,12 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      transform: true,
+      skipMissingProperties: true, // Consider all fields
     }),
   );
   app.listen();
 
-  console.log('Authentication service is listening on port 8890');
+  console.log('Guarantee service is listening on port 8890');
 }
 bootstrap();

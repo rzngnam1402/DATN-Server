@@ -14,30 +14,30 @@ const common_1 = require("@nestjs/common");
 const application_service_1 = require("./application.service");
 const microservices_1 = require("@nestjs/microservices");
 let ApplicationController = class ApplicationController {
-    constructor(applicationsService) {
-        this.applicationsService = applicationsService;
+    constructor(applicationService) {
+        this.applicationService = applicationService;
     }
     handleCreate(payload) {
         const dto = payload.data;
         const file = payload.collateralFile;
         console.log(dto, payload.collateralFile);
-        return this.applicationsService.create(dto, file);
+        return this.applicationService.create(dto, file);
     }
     handleGetAllApplicationsUser(payload) {
         const data = payload;
-        return this.applicationsService.getAllApplicationsUser(data);
+        return this.applicationService.getAllApplicationsUser(data);
     }
     handleGetAllApplicationsBanker(payload) {
         const data = payload;
-        return this.applicationsService.getAllApplicationsBanker(data);
+        return this.applicationService.getAllApplicationsBanker(data);
     }
     handleGetApplicationById(payload) {
         const data = payload;
-        return this.applicationsService.getApplicationById(data);
+        return this.applicationService.getApplicationById(data);
     }
     handleUpdateApplicationById(payload) {
         const { id, data } = payload;
-        return this.applicationsService.updateApplicationById(id, data);
+        return this.applicationService.updateApplicationById(id, data);
     }
 };
 exports.ApplicationController = ApplicationController;
@@ -73,6 +73,6 @@ __decorate([
 ], ApplicationController.prototype, "handleUpdateApplicationById", null);
 exports.ApplicationController = ApplicationController = __decorate([
     (0, common_1.Controller)('applications'),
-    __metadata("design:paramtypes", [application_service_1.ApplicationsService])
+    __metadata("design:paramtypes", [application_service_1.ApplicationService])
 ], ApplicationController);
 //# sourceMappingURL=application.controller.js.map

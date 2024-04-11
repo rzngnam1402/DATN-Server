@@ -1,3 +1,4 @@
+import { ApplicationStatus } from 'src/enum/status.enum';
 export declare class ApplicationDto {
     businessName: string;
     businessRegistrationNumber: string;
@@ -5,6 +6,7 @@ export declare class ApplicationDto {
     debitAccountNo: string;
     contactPersonName: string;
     citizenID: string;
+    status: ApplicationStatus;
     applicantEmail: string;
     beneficiaryBusinessName: string;
     beneficiaryBusinessRegistrationNumber: string;

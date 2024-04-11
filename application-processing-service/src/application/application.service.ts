@@ -5,7 +5,7 @@ import { ApplicationStatus } from 'src/enum/status.enum';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
-export class ApplicationsService {
+export class ApplicationService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: ApplicationDto, collateralFile: Express.Multer.File[]) {
@@ -98,16 +98,21 @@ export class ApplicationsService {
       }
     }
   }
-
   async updateApplicationById(id: number, dto: ApplicationDto) {
-    console.log(id, dto);
     try {
       const res = await this.prisma.application.update({
         where: {
           application_id: id,
         },
         data: dto,
+        include: {
+          ApplicantDetail: true,
+          BeneficiaryDetail: true,
+        },
       });
+      // approved application, generate new guarantee pdf
+      if (dto.status == 'APPROVED') {
+      }
       return res;
     } catch (error) {
       return error.message;

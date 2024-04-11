@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationDto = void 0;
 const class_validator_1 = require("class-validator");
+const status_enum_1 = require("../enum/status.enum");
 class ApplicationDto {
 }
 exports.ApplicationDto = ApplicationDto;
@@ -44,6 +45,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ApplicationDto.prototype, "citizenID", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(status_enum_1.ApplicationStatus),
+    __metadata("design:type", String)
+], ApplicationDto.prototype, "status", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEmail)(),

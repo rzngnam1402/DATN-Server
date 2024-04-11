@@ -9,12 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicationsService = void 0;
+exports.ApplicationService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const status_enum_1 = require("../enum/status.enum");
 const library_1 = require("@prisma/client/runtime/library");
-let ApplicationsService = class ApplicationsService {
+let ApplicationService = class ApplicationService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -104,14 +104,19 @@ let ApplicationsService = class ApplicationsService {
         }
     }
     async updateApplicationById(id, dto) {
-        console.log(id, dto);
         try {
             const res = await this.prisma.application.update({
                 where: {
                     application_id: id,
                 },
                 data: dto,
+                include: {
+                    ApplicantDetail: true,
+                    BeneficiaryDetail: true,
+                },
             });
+            if (dto.status == 'APPROVED') {
+            }
             return res;
         }
         catch (error) {
@@ -119,9 +124,9 @@ let ApplicationsService = class ApplicationsService {
         }
     }
 };
-exports.ApplicationsService = ApplicationsService;
-exports.ApplicationsService = ApplicationsService = __decorate([
+exports.ApplicationService = ApplicationService;
+exports.ApplicationService = ApplicationService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])
-], ApplicationsService);
+], ApplicationService);
 //# sourceMappingURL=application.service.js.map

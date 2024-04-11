@@ -1,7 +1,7 @@
-import { ApplicationsService } from './application.service';
+import { ApplicationService } from './application.service';
 export declare class ApplicationController {
-    private applicationsService;
-    constructor(applicationsService: ApplicationsService);
+    private applicationService;
+    constructor(applicationService: ApplicationService);
     handleCreate(payload: any): Promise<{
         application_id: number;
         applicant_detail_id: number;

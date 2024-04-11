@@ -4,7 +4,9 @@ import {
   IsDate,
   IsOptional,
   IsEmail,
+  IsEnum,
 } from 'class-validator';
+import { ApplicationStatus } from 'src/enum/status.enum';
 
 export class ApplicationDto {
   @IsNotEmpty()
@@ -30,6 +32,9 @@ export class ApplicationDto {
   @IsNotEmpty()
   @IsString()
   citizenID: string;
+
+  @IsEnum(ApplicationStatus)
+  status: ApplicationStatus;
 
   @IsNotEmpty()
   @IsEmail()

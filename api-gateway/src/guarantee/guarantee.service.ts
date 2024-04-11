@@ -19,6 +19,13 @@ export class GuaranteeService {
       );
   }
 
+  createGuarantee(req: Request) {
+    const pattern = { cmd: 'create-new' };
+    const payload = req.body;
+    console.log(payload);
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
   generateGuarantee() {
     const pattern = { cmd: 'gen-guarantee' };
     const payload = {};

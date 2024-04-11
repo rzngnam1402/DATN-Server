@@ -2,7 +2,7 @@
 import { ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ApplicationDto } from 'src/dto/application.dto';
-export declare class ApplicationsService {
+export declare class ApplicationService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(dto: ApplicationDto, collateralFile: Express.Multer.File[]): Promise<{

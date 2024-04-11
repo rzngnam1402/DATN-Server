@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-// import { Stream } from 'stream';
 import * as fs from 'fs';
 import * as pdf from 'pdf-creator-node';
 import * as path from 'path';
@@ -12,7 +11,8 @@ export class PdfGeneratorService {
     @Inject('FIREBASE_ADMIN') private readonly firebaseAdmin: admin.app.App,
   ) {}
 
-  async genGuaranteeDoc() {
+  async genGuaranteeDoc(dto: any) {
+    console.log(dto);
     const html = fs.readFileSync(
       path.join(process.cwd(), './src/pdf-generator/templates/template.html'),
       'utf-8',
@@ -24,7 +24,7 @@ export class PdfGeneratorService {
     };
 
     const pdfBuffer = await pdf.create(document, PDF_OPTIONS);
-    const fileName = `guarantee-documents/test4.pdf`;
+    const fileName = `guarantee-documents/test.pdf`;
     const fileRef = this.firebaseAdmin.storage().bucket().file(fileName);
     await fileRef.save(pdfBuffer, {
       metadata: {
