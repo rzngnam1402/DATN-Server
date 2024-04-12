@@ -19,13 +19,13 @@
 
       .container {
         margin: auto;
-        padding: 20px 80px;
+        padding: 20px 65px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       }
 
       .header {
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 12px;
       }
 
       .header h1 {
@@ -35,17 +35,17 @@
 
       .content p,
       .footer p {
-        font-size: 14px;
+        font-size: 12px;
         margin: 10px 0;
       }
 
       .content .title {
-        font-size: 24px;
+        font-size: 18px;
         color: #0056b3;
       }
 
       .signature {
-        margin-top: 50px;
+        margin-bottom: 90px;
         text-align: right;
         font-style: italic;
       }
@@ -63,14 +63,25 @@
       .header .description {
         font-style: italic;
         font-weight: bold;
+        font-size: 12px;
       }
       .header .title {
         margin-bottom: 0.5rem;
-        font-size: larger;
       }
 
       .content-header {
         text-align: center;
+      }
+
+      .bold {
+        font-weight: bold;
+      }
+      .justified {
+        text-align: justify;
+        text-align-last: left;
+      }
+      .bylaws {
+        font-size: 8px;
       }
     </style>
   </head>
@@ -83,75 +94,75 @@
       </div>
       <div class="content">
         <div class="content-header">
-          <h1 class="title">Guarantee Letter</h1>
-          <p>Reference Number: 10.11.11.BL315</p>
-        </div>
-        <p class="section-title">To:</p>
-        <div>
+          <h1 class="title">Letter of Guarantee</h1>
           <p>
-            <span class="highlight">Thai Nguyen Steel Joint Stock Company</span>
+            Reference Number:
+            {{guarantee_id}}.{{applicant_detail_id}}.{{beneficiary_detail_id}}
           </p>
-        </div>
-        <p class="section-title">Guarantor:</p>
-        <div>
-          <p>Vietnam International Commercial Joint Stock Bank, Hanoi Branch</p>
-          <p>Address: 306 Tay Son, Dong Da, Hanoi</p>
-          <p>Telephone: 043 5378 037 Fax: 043 5387 030</p>
-          <p>Representative: Tran Thu Nga</p>
         </div>
         <p class="section-title">Guaranteed Party:</p>
         <div>
-          <p>Ha Nam Trading and Construction Limited Liability Company</p>
-          <p>Business License Number: 07.002.06782</p>
+          <p>{{ApplicantDetail.businessName}}</p>
           <p>
-            Address: Km 52, National Highway 1A, Lao Cau Village, Tien Tan
-            Commune, Duy Tien District, Ha Nam Province
+            Business Registration Number:
+            {{ApplicantDetail.businessRegistrationNumber}}
           </p>
-          <p>Telephone: 0351 3835 574</p>
-          <p>Representative: Nguyen Thi Thanh Son</p>
+          <p>Address: {{ApplicantDetail.businessAddress}}</p>
+          <p>Representative: {{ApplicantDetail.contactPersonName}}</p>
+          <p>Email: {{ApplicantDetail.applicantEmail}}</p>
         </div>
 
-        <p class="section-title">Beneficiary:</p>
+        <p class="section-title">Beneficiary Party:</p>
         <div>
-          <p>Thai Nguyen Iron and Steel Joint Stock Company</p>
-          <p>Address: Cam Gia Ward, Thai Nguyen City, Thai Nguyen Province</p>
-          <p>Telephone: 0280 3832005 / 3836919</p>
-          <p>Representative: Tran Van Kham</p>
-          <div style="page-break-before: always">&nbsp;</div>
+          <p>{{BeneficiaryDetail.businessName}}</p>
+          <p>
+            Business Registration Number:
+            {{BeneficiaryDetail.businessRegistrationNumber}}
+          </p>
+          <p>Address: {{BeneficiaryDetail.businessAddress}}</p>
+          <p>Email: {{BeneficiaryDetail.email}}</p>
           <p class="section-title">Guarantee Details:</p>
-          <p>
-            We, Vietnam International Commercial Joint Stock Bank - Hanoi Branch
-            (VIB Hanoi), hereby agree to provide a guarantee to the beneficiary
-            with a value of VND 50,000,000,000 (Fifty billion Vietnamese dong)
-            to secure the payment obligations of the guaranteed party to the
-            beneficiary.
-          </p>
-          <p>
-            This guarantee is effective from October 1, 2011, until 4:00 PM on
-            January 1, 2012. This document constitutes the sole original
-            guarantee and is not transferable.
-          </p>
-          <p>
-            All requests related to this guarantee must be presented to the
-            guarantor within the validity period of this Guarantee Letter along
-            with the original Guarantee Letter.
-          </p>
-        </div>
-        <div class="signature">
-          <p>On behalf of Vietnam International Commercial Joint Stock Bank</p>
-          <p>Tran Van Kham</p>
-        </div>
-        <div class="notice">
-          <p>
-            This guarantee is governed and interpreted in accordance with the
-            laws of Vietnam. Any disputes related to this Guarantee Letter will
-            be resolved by the parties through mediation and good faith
-            negotiation. If the parties fail to reach an agreement, disputes
-            will be settled by a competent court.
-          </p>
+          <div class="bylaws">
+            <p class="justified">
+              We, {{bankName}} (Guarantor) hereby agree to provide a guarantee
+              to the beneficiary with a value of
+              <span class="bold">
+                {{currency}} {{amount}} ({{moneyText}})
+              </span>
+              to secure the payment obligations of the guaranteed party to the
+              beneficiary. This document constitutes the sole original guarantee
+              and is not transferable.
+            </p>
+            <p>
+              This guarantee is effective from
+              <span class="bold"> {{startDate}}, </span>
+              until 23:59 on
+              <span class="bold"> {{expiryDate}}. </span>
+            </p>
+            <p class="justified">
+              We hereby commit to not arbitrarily cancel and affirm that we
+              shall act on behalf of the guaranteed party to assume
+              responsibility for payment to the guarantee recipient of an amount
+              up to the stated guarantee value. All requests related to this
+              guarantee must be presented to the guarantor within the validity
+              period of this Guarantee Letter along with the original Guarantee
+              Letter.
+            </p>
+          </div>
+          <div class="notice justified">
+            <p>
+              This guarantee is governed and interpreted in accordance with the
+              laws of Vietnam. Any disputes related to this Guarantee Letter
+              will be resolved by the parties through mediation and good faith
+              negotiation. If the parties fail to reach an agreement, disputes
+              will be settled by a competent court.
+            </p>
+          </div>
+          <div class="signature">
+            <p>On behalf of {{ bankName }}</p>
+          </div>
         </div>
       </div>
-      <div class="footer">This is footer</div>
     </div>
   </body>
 </html>

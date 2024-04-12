@@ -26,9 +26,9 @@ export class GuaranteeService {
     return this.guaranteeClient.send(pattern, payload);
   }
 
-  generateGuarantee() {
+  generateGuarantee(id: string) {
     const pattern = { cmd: 'gen-guarantee' };
-    const payload = {};
+    const payload = id;
     return this.guaranteeClient.send(pattern, payload);
   }
 }

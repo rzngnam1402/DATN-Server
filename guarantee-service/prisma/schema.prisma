@@ -20,8 +20,8 @@ enum Status {
 
 model Guarantee {
   guarantee_id          Int @id @default(autoincrement())
-  applicant_detail_id   Int
-  beneficiary_detail_id Int
+  applicant_detail_id   String @unique
+  beneficiary_detail_id String @unique
 
   bankName       String
   amount         String
@@ -44,7 +44,7 @@ model Guarantee {
 }
 
 model ApplicantDetail {
-  applicant_detail_id        Int    @id @default(autoincrement())
+  applicant_detail_id        String    @id
   businessName               String
   businessRegistrationNumber String
   businessAddress            String
@@ -58,7 +58,7 @@ model ApplicantDetail {
 }
 
 model BeneficiaryDetail {
-  beneficiary_detail_id      Int    @id @default(autoincrement())
+  beneficiary_detail_id      String    @id
   businessName               String
   businessRegistrationNumber String
   businessAddress            String

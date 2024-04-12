@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req } from '@nestjs/common';
+import { Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { Roles } from 'src/auth/decorator/role.decorator';
 import { Role } from 'src/auth/role/roles.enum';
 import { GuaranteeService } from './guarantee.service';
@@ -18,8 +18,8 @@ export class GuaranteeController {
     return this.guaranteeService.createGuarantee(req);
   }
 
-  @Get('gen-guarantee')
-  generateGuarantee() {
-    return this.guaranteeService.generateGuarantee();
+  @Get('gen-guarantee/:id')
+  generateGuarantee(@Param('id') id: string) {
+    return this.guaranteeService.generateGuarantee(id);
   }
 }
