@@ -10,4 +10,9 @@ export class GuaranteeController {
   async handleCreate(data: GuaranteeDto) {
     return this.guaranteeService.handleCreate(data);
   }
+
+  @MessagePattern({ cmd: 'get-all-guarantees-banker' })
+  async handleGetAllGuaranteesBanker(company: string) {
+    return this.guaranteeService.getAllGuaranteesBanker(company);
+  }
 }

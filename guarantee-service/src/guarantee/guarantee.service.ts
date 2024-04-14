@@ -51,4 +51,17 @@ export class GuaranteeService {
     } catch {}
     return 'guarantee-created';
   }
+
+  async getAllGuaranteesBanker(company: string) {
+    const res = await this.prisma.guarantee.findMany({
+      where: {
+        bankName: company,
+      },
+      include: {
+        ApplicantDetail: true,
+        BeneficiaryDetail: true,
+      },
+    });
+    return res;
+  }
 }

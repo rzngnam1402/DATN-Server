@@ -31,4 +31,10 @@ export class GuaranteeService {
     const payload = id;
     return this.guaranteeClient.send(pattern, payload);
   }
+
+  getAllGuaranteesBanker(user: any) {
+    const pattern = { cmd: 'get-all-guarantees-banker' };
+    const payload = user.company;
+    return this.guaranteeClient.send(pattern, payload);
+  }
 }
