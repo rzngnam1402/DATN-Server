@@ -17,16 +17,25 @@ export class GuaranteeController {
     return this.guaranteeService.pingGuaranteeService();
   }
 
+  @Roles(Role.BANKER, Role.ADMIN)
   @Post('create-new')
   createGuarantee(@Req() req: Request) {
     return this.guaranteeService.createGuarantee(req);
   }
 
+  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Get(':id')
+  async getGuaranteeById(@Param('id') id: string) {
+    return this.guaranteeService.getGuaranteeById(id);
+  }
+
+  @Roles(Role.BANKER, Role.ADMIN)
   @Get('gen-guarantee/:id')
   generateGuarantee(@Param('id') id: string) {
     return this.guaranteeService.generateGuarantee(id);
   }
 
+  @Roles(Role.BANKER, Role.ADMIN)
   @Get('banker/all')
   getAllGuaranteesBanker(@GetUser() user: any) {
     return this.guaranteeService.getAllGuaranteesBanker(user);

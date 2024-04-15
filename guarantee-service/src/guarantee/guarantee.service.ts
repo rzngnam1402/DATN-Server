@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Status } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { GuaranteeDto } from 'src/dto/guarantee.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -63,5 +64,26 @@ export class GuaranteeService {
       },
     });
     return res;
+  }
+
+  async getGuaranteeById(id: number) {
+    try {
+      const res = await this.prisma.guarantee.findFirstOrThrow({
+        where: {
+          guarantee_id: id,
+        },
+        include: {
+          ApplicantDetail: true,
+          BeneficiaryDetail: true,
+        },
+      });
+      return res;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          return new ForbiddenException('Guarantee not found');
+        }
+      }
+    }
   }
 }

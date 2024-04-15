@@ -98,6 +98,7 @@ export class ApplicationService {
       }
     }
   }
+
   async updateApplicationById(id: number, dto: ApplicationDto) {
     try {
       const res = await this.prisma.application.update({

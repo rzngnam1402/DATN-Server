@@ -15,4 +15,10 @@ export class GuaranteeController {
   async handleGetAllGuaranteesBanker(company: string) {
     return this.guaranteeService.getAllGuaranteesBanker(company);
   }
+
+  @MessagePattern({ cmd: 'get-guarantee-by-id' })
+  async hadnleGetGuaranteeById(payload: number) {
+    const data = payload;
+    return this.guaranteeService.getGuaranteeById(data);
+  }
 }
