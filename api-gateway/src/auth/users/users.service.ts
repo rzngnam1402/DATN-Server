@@ -16,4 +16,16 @@ export class UsersService {
     const payload = {};
     return this.authClient.send(pattern, payload);
   }
+
+  addSignature(data: Request) {
+    const pattern = { cmd: 'add-signature' };
+    const payload = data.body;
+    return this.authClient.send(pattern, payload);
+  }
+
+  getSignature(data: Request) {
+    const pattern = { cmd: 'get-signature' };
+    const payload = data.body;
+    return this.authClient.send(pattern, payload);
+  }
 }

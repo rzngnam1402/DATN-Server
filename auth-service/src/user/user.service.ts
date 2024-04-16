@@ -25,4 +25,35 @@ export class UserService {
     allUsers.map((user) => delete user.hash);
     return allUsers;
   }
+
+  async getSignature(data: { email: string }) {
+    try {
+      const res = await this.prisma.user.findFirstOrThrow({
+        where: {
+          email: data.email,
+        },
+      });
+      return res.signature;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
+  async addSignature(data: { id: string; signature: string }) {
+    const { id, signature } = data;
+    console.log(id, signature);
+    try {
+      const res = await this.prisma.user.update({
+        where: {
+          id: Number(id),
+        },
+        data: { signature: signature },
+      });
+      return res;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
 }
