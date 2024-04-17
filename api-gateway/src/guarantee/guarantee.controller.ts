@@ -40,4 +40,10 @@ export class GuaranteeController {
   getAllGuaranteesBanker(@GetUser() user: any) {
     return this.guaranteeService.getAllGuaranteesBanker(user);
   }
+
+  @Roles(Role.BANKER, Role.ADMIN)
+  @Post('sign/:id')
+  signGuarantee(@Param('id') id: string, @Req() data: Request) {
+    return this.guaranteeService.signGuarantee(id, data);
+  }
 }

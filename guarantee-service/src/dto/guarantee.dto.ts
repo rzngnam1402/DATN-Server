@@ -35,15 +35,15 @@ export class GuaranteeDto {
   bankName: string;
 
   @IsNotEmpty()
+  @IsString()
+  currency: string;
+
+  @IsNotEmpty()
   @IsNumberString()
   amount: string;
 
   @IsOptional()
   collateralFile: any;
-
-  @IsNotEmpty()
-  @IsString()
-  currency: string;
 
   @IsNotEmpty()
   @IsDateString()

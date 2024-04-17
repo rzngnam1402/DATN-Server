@@ -17,7 +17,7 @@ export class GuaranteeController {
   }
 
   @MessagePattern({ cmd: 'get-guarantee-by-id' })
-  async hadnleGetGuaranteeById(payload: number) {
+  async handleGetGuaranteeById(payload: number) {
     const data = payload;
     return this.guaranteeService.getGuaranteeById(data);
   }

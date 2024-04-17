@@ -15,7 +15,10 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       transform: true,
-      skipMissingProperties: true, // Consider all fields
+      skipMissingProperties: true, // Consider all fields,
+      exceptionFactory: (errors) => {
+        console.log(errors[0].children);
+      },
     }),
   );
   app.listen();

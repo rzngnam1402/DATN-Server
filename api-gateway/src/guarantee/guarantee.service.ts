@@ -43,4 +43,10 @@ export class GuaranteeService {
     const payload = user.company;
     return this.guaranteeClient.send(pattern, payload);
   }
+
+  signGuarantee(id: string, data: Request) {
+    const pattern = { cmd: 'sign-guarantee' };
+    const payload = { id, data: data.body };
+    return this.guaranteeClient.send(pattern, payload);
+  }
 }
