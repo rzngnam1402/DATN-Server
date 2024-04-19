@@ -91,4 +91,25 @@ export class PdfGeneratorService {
     }
     return publicUrl;
   }
+
+  async uploadBuffer(
+    buffer: Buffer,
+    destinationPath: string,
+    mimeType: string,
+  ): Promise<string> {
+    const fileRef = this.firebaseAdmin.storage().bucket().file(destinationPath);
+
+    await fileRef.save(buffer, {
+      metadata: {
+        contentType: mimeType,
+        cacheControl: 'no-cache, max-age=0',
+      },
+    });
+
+    await fileRef.makePublic();
+
+    const publicUrl = fileRef.publicUrl();
+
+    return publicUrl;
+  }
 }
