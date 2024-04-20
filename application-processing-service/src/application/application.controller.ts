@@ -11,7 +11,6 @@ export class ApplicationController {
   handleCreate(payload: any) {
     const dto = payload.data;
     const file = payload.collateralFile;
-    console.log(dto, payload.collateralFile);
     return this.applicationService.create(dto, file);
   }
 

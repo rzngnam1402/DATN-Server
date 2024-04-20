@@ -22,7 +22,6 @@ export class GuaranteeService {
   createGuarantee(req: Request) {
     const pattern = { cmd: 'create-new' };
     const payload = req.body;
-    console.log(payload);
     return this.guaranteeClient.send(pattern, payload);
   }
 
@@ -47,6 +46,12 @@ export class GuaranteeService {
   signGuarantee(id: string, data: Request) {
     const pattern = { cmd: 'sign-guarantee' };
     const payload = { id, data: data.body };
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
+  updateGuaranteeById(id: string, data: Request) {
+    const pattern = { cmd: 'update-guarantee-by-id' };
+    const payload = { id: Number(id), data: data.body };
     return this.guaranteeClient.send(pattern, payload);
   }
 }

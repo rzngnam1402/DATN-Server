@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from 'src/auth/decorator/role.decorator';
 import { Role } from 'src/auth/role/roles.enum';
 import { GuaranteeService } from './guarantee.service';
@@ -45,5 +53,11 @@ export class GuaranteeController {
   @Post('sign/:id')
   signGuarantee(@Param('id') id: string, @Req() data: Request) {
     return this.guaranteeService.signGuarantee(id, data);
+  }
+
+  @Roles(Role.BANKER, Role.ADMIN)
+  @Patch(':id')
+  async updateGuaranteeById(@Param('id') id: string, @Req() data: Request) {
+    return this.guaranteeService.updateGuaranteeById(id, data);
   }
 }

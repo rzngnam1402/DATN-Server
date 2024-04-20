@@ -115,8 +115,6 @@ let ApplicationService = class ApplicationService {
                     BeneficiaryDetail: true,
                 },
             });
-            if (dto.status == 'APPROVED') {
-            }
             return res;
         }
         catch (error) {

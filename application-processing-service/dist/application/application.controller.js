@@ -20,7 +20,6 @@ let ApplicationController = class ApplicationController {
     handleCreate(payload) {
         const dto = payload.data;
         const file = payload.collateralFile;
-        console.log(dto, payload.collateralFile);
         return this.applicationService.create(dto, file);
     }
     handleGetAllApplicationsUser(payload) {

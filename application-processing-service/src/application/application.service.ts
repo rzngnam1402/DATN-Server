@@ -111,9 +111,6 @@ export class ApplicationService {
           BeneficiaryDetail: true,
         },
       });
-      // approved application, generate new guarantee pdf
-      if (dto.status == 'APPROVED') {
-      }
       return res;
     } catch (error) {
       return error.message;

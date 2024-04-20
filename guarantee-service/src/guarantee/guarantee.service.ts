@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { Status } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { GuaranteeDto } from 'src/dto/guarantee.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -84,6 +84,32 @@ export class GuaranteeService {
           return new ForbiddenException('Guarantee not found');
         }
       }
+    }
+  }
+
+  async updateGuaranteeById(id: number, dto: GuaranteeDto) {
+    try {
+      type UpdateGuaranteeDto = Omit<
+        GuaranteeDto,
+        'applicant_detail_id' | 'beneficiary_detail_id'
+      >;
+
+      const updatedData: UpdateGuaranteeDto = {
+        ...dto,
+      };
+      const res = await this.prisma.guarantee.update({
+        where: {
+          guarantee_id: id,
+        },
+        data: updatedData as Prisma.GuaranteeUncheckedUpdateInput,
+        include: {
+          ApplicantDetail: true,
+          BeneficiaryDetail: true,
+        },
+      });
+      return res;
+    } catch (error) {
+      return error.message;
     }
   }
 }

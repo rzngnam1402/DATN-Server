@@ -21,4 +21,10 @@ export class GuaranteeController {
     const data = payload;
     return this.guaranteeService.getGuaranteeById(data);
   }
+
+  @MessagePattern({ cmd: 'update-guarantee-by-id' })
+  handleUpdateGuaranteeById(payload: any) {
+    const { id, data } = payload;
+    return this.guaranteeService.updateGuaranteeById(id, data);
+  }
 }

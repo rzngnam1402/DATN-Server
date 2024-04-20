@@ -59,9 +59,9 @@ export class GuaranteeDto {
 
   @ValidateNested()
   @Type(() => ApplicantDetailDto)
-  ApplicantDetail: ApplicantDetailDto;
+  ApplicantDetail?: Partial<ApplicantDetailDto>;
 
   @ValidateNested()
   @Type(() => BeneficiaryDetailDto)
-  BeneficiaryDetail: BeneficiaryDetailDto;
+  BeneficiaryDetail?: Partial<BeneficiaryDetailDto>;
 }
