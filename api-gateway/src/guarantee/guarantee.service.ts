@@ -54,4 +54,10 @@ export class GuaranteeService {
     const payload = { id: Number(id), data: data.body };
     return this.guaranteeClient.send(pattern, payload);
   }
+
+  sendGuaranteeNotification(data: Request) {
+    const pattern = { cmd: 'send-notification-email' };
+    const payload = data.body;
+    return this.guaranteeClient.send(pattern, payload);
+  }
 }

@@ -8,6 +8,7 @@ import { GuaranteeService } from './guarantee/guarantee.service';
 import { GuaranteeModule } from './guarantee/guarantee.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { BsignModule } from './bsign/bsign.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BsignModule } from './bsign/bsign.module';
     GuaranteeModule,
     PrismaModule,
     BsignModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService, GuaranteeService],

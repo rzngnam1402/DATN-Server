@@ -60,4 +60,10 @@ export class GuaranteeController {
   async updateGuaranteeById(@Param('id') id: string, @Req() data: Request) {
     return this.guaranteeService.updateGuaranteeById(id, data);
   }
+
+  @Roles(Role.BANKER, Role.ADMIN)
+  @Post('email')
+  async sendGuaranteeNotification(@Req() data: Request) {
+    return this.guaranteeService.sendGuaranteeNotification(data);
+  }
 }
