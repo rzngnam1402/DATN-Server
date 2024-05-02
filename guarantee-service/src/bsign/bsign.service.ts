@@ -14,8 +14,6 @@ export class BsignService {
     private prisma: PrismaService,
     private pdfGeneratorService: PdfGeneratorService,
   ) {}
-  private readonly baseURL: string =
-    'https://staging-credentials-manager.bsign.app/api/sign/p12/pdf/sign-visible-with-image';
 
   async signGuarantee(payload: {
     id: string;
@@ -24,9 +22,12 @@ export class BsignService {
       placeholder: string;
       pdfFilePath: string;
       signatureImageURL: string;
+      providerName: string;
     };
   }): Promise<any> {
     const { id, data } = payload;
+    const baseURL: string = `https://staging-credentials-manager.bsign.app/api/sign/${data.providerName.toLowerCase()}/pdf/sign-visible-with-image`;
+
     const formData = new FormData();
     const token = this.configService.get<string>('BSIGN_AUTHENTICATION_TOKEN');
 
@@ -50,11 +51,10 @@ export class BsignService {
       Authorization: `Bearer ${token}`,
     };
     try {
-      const response: AxiosResponse = await axios.post(
-        `${this.baseURL}`,
-        formData,
-        { headers, responseType: 'arraybuffer' },
-      );
+      const response: AxiosResponse = await axios.post(`${baseURL}`, formData, {
+        headers,
+        responseType: 'arraybuffer',
+      });
 
       const guarantee = await this.prisma.guarantee.findUnique({
         where: {

@@ -14,6 +14,7 @@ export class BsignController {
       placeholder: string;
       pdfFilePath: string;
       signatureImageURL: string;
+      providerName: string;
     };
   }) {
     return this.bsignService.signGuarantee(payload);
