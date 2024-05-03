@@ -66,6 +66,21 @@ export class GuaranteeService {
     return res;
   }
 
+  async getAllGuaranteesClient(email: string) {
+    const res = await this.prisma.guarantee.findMany({
+      where: {
+        ApplicantDetail: {
+          applicantEmail: email,
+        },
+      },
+      include: {
+        ApplicantDetail: true,
+        BeneficiaryDetail: true,
+      },
+    });
+    return res;
+  }
+
   async getGuaranteeById(id: number) {
     try {
       const res = await this.prisma.guarantee.findFirstOrThrow({

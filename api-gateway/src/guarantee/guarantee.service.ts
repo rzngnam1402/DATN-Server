@@ -43,6 +43,12 @@ export class GuaranteeService {
     return this.guaranteeClient.send(pattern, payload);
   }
 
+  getAllGuaranteesClient(user: any) {
+    const pattern = { cmd: 'get-all-guarantees-client' };
+    const payload = user.email;
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
   signGuarantee(id: string, data: Request) {
     const pattern = { cmd: 'sign-guarantee' };
     const payload = { id, data: data.body };

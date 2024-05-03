@@ -16,6 +16,11 @@ export class GuaranteeController {
     return this.guaranteeService.getAllGuaranteesBanker(company);
   }
 
+  @MessagePattern({ cmd: 'get-all-guarantees-client' })
+  async handleGetAllGuaranteesClient(email: string) {
+    return this.guaranteeService.getAllGuaranteesClient(email);
+  }
+
   @MessagePattern({ cmd: 'get-guarantee-by-id' })
   async handleGetGuaranteeById(payload: number) {
     const data = payload;
