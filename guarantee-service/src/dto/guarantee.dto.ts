@@ -11,12 +11,6 @@ import {
 import { ApplicantDetailDto } from './applicant-detail.dto';
 import { BeneficiaryDetailDto } from './beneficiary-detail.dto';
 
-export enum Status {
-  APPROVED = 'APPROVED',
-  PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
-}
-
 export class GuaranteeDto {
   @IsNotEmpty()
   @IsNumber()

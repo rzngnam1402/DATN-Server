@@ -8,10 +8,4 @@ export class AppController {
     console.log('Ping received', data);
     return 'pong';
   }
-
-  @MessagePattern({ cmd: 'application-approved' })
-  handleApproved() {
-    console.log('request received');
-    return 'pong';
-  }
 }

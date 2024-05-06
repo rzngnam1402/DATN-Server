@@ -18,8 +18,14 @@ enum Status {
   ISSUED
 }
 
+enum IndemnityStatus {
+  PENDING
+  FULFILLED
+  REJECTED
+}
+
 model Guarantee {
-  guarantee_id          Int @id @default(autoincrement())
+  guarantee_id          Int    @id @default(autoincrement())
   applicant_detail_id   String @unique
   beneficiary_detail_id String @unique
 
@@ -40,11 +46,13 @@ model Guarantee {
   ApplicantDetail   ApplicantDetail   @relation(fields: [applicant_detail_id], references: [applicant_detail_id], onDelete: Cascade)
   BeneficiaryDetail BeneficiaryDetail @relation(fields: [beneficiary_detail_id], references: [beneficiary_detail_id], onDelete: Cascade)
 
+  Indemnity Indemnity?
+
   @@map("guarantees")
 }
 
 model ApplicantDetail {
-  applicant_detail_id        String    @id
+  applicant_detail_id        String @id
   businessName               String
   businessRegistrationNumber String
   businessAddress            String
@@ -58,11 +66,23 @@ model ApplicantDetail {
 }
 
 model BeneficiaryDetail {
-  beneficiary_detail_id      String    @id
+  beneficiary_detail_id      String @id
   businessName               String
   businessRegistrationNumber String
   businessAddress            String
   email                      String
 
   Guarantees Guarantee[]
+}
+
+model Indemnity {
+  indemnity_id Int             @id @default(autoincrement())
+  status       IndemnityStatus @default(PENDING)
+  reason       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  guarantee    Guarantee @relation(fields: [guarantee_id], references: [guarantee_id])
+  guarantee_id Int       @unique
 }

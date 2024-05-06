@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { GuaranteeService } from './guarantee.service';
-import { GuaranteeDto } from 'src/dto/guarantee.dto';
+import { GuaranteeDto } from 'src/dto';
 
 @Controller('guarantee')
 export class GuaranteeController {

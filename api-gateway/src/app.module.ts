@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ApplicationModule } from './application/application.module';
 import { UsersModule } from './auth/users/users.module';
 import { GuaranteeModule } from './guarantee/guarantee.module';
+import { IndemnityModule } from './indemnity/indemnity.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GuaranteeModule } from './guarantee/guarantee.module';
     ApplicationModule,
     UsersModule,
     GuaranteeModule,
+    IndemnityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

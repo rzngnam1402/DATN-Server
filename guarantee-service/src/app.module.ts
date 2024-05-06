@@ -9,6 +9,8 @@ import { GuaranteeModule } from './guarantee/guarantee.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { BsignModule } from './bsign/bsign.module';
 import { EmailModule } from './email/email.module';
+import { IndemnityModule } from './indemnity/indemnity.module';
+import { IndemnityService } from './indemnity/indemnity.service';
 
 @Module({
   imports: [
@@ -21,8 +23,9 @@ import { EmailModule } from './email/email.module';
     PrismaModule,
     BsignModule,
     EmailModule,
+    IndemnityModule,
   ],
   controllers: [AppController],
-  providers: [AppService, GuaranteeService],
+  providers: [AppService, GuaranteeService, IndemnityService],
 })
 export class AppModule {}
