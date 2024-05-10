@@ -90,6 +90,7 @@ export class GuaranteeService {
         include: {
           ApplicantDetail: true,
           BeneficiaryDetail: true,
+          Indemnity: true,
         },
       });
       return res;

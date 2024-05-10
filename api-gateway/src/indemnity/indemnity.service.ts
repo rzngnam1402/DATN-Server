@@ -10,6 +10,7 @@ export class IndemnityService {
   createNewIndemnity(req: Request) {
     const pattern = { cmd: 'create-new-indemnity' };
     const payload = req.body;
+    console.log(payload);
     return this.guaranteeClient.send(pattern, payload);
   }
 
@@ -19,9 +20,21 @@ export class IndemnityService {
     return this.guaranteeClient.send(pattern, payload);
   }
 
+  getAllIndemnitiesBanker(user: any) {
+    const pattern = { cmd: 'get-all-indemnities-banker' };
+    const payload = user.company;
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
   getIndemnityById(id: string) {
     const pattern = { cmd: 'get-indemnity-by-id' };
     const payload = Number(id);
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
+  updateIndemnityById(id: string, data: Request) {
+    const pattern = { cmd: 'update-indemnity-by-id' };
+    const payload = { id: Number(id), data: data.body };
     return this.guaranteeClient.send(pattern, payload);
   }
 }

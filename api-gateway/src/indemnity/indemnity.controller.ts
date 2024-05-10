@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Roles } from 'src/auth/decorator/role.decorator';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { RolesGuard } from 'src/auth/guard';
@@ -23,9 +31,21 @@ export class IndemnityController {
     return this.indemnitySerivce.getAllIndemnitiesClient(user);
   }
 
+  @Roles(Role.BANKER, Role.ADMIN)
+  @Get('banker/all')
+  getAllIndemnitiesBanker(@GetUser() user: any) {
+    return this.indemnitySerivce.getAllIndemnitiesBanker(user);
+  }
+
   @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
   @Get(':id')
   async getGuaranteeById(@Param('id') id: string) {
     return this.indemnitySerivce.getIndemnityById(id);
+  }
+
+  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Patch(':id')
+  async updateIndemnityById(@Param('id') id: string, @Req() data: Request) {
+    return this.indemnitySerivce.updateIndemnityById(id, data);
   }
 }

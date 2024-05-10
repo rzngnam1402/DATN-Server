@@ -40,6 +40,25 @@ export class IndemnityService {
     return res;
   }
 
+  async getAllIndemnitiesBanker(bankName: string) {
+    const res = await this.prisma.indemnity.findMany({
+      where: {
+        guarantee: {
+          bankName: bankName,
+        },
+      },
+      include: {
+        guarantee: {
+          include: {
+            ApplicantDetail: true,
+            BeneficiaryDetail: true,
+          },
+        },
+      },
+    });
+    return res;
+  }
+
   async getIndemnityById(id: number) {
     try {
       const res = await this.prisma.indemnity.findFirstOrThrow({
@@ -63,5 +82,19 @@ export class IndemnityService {
         }
       }
     }
+  }
+
+  async updateIndemnityById(id: number, dto: IndemnityDto) {
+    try {
+      const res = await this.prisma.indemnity.update({
+        where: {
+          indemnity_id: id,
+        },
+        data: {
+          status: dto.status,
+        },
+      });
+      return res;
+    } catch (error) {}
   }
 }
