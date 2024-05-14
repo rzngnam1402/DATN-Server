@@ -16,7 +16,6 @@ async function bootstrap() {
     }),
   );
   app.listen();
-
-  console.log('Authentication service is listening on port 8888');
+  console.log('User service is listening on port 8888');
 }
 bootstrap();
