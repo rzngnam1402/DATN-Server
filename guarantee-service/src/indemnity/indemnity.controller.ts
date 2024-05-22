@@ -8,8 +8,11 @@ export class IndemnityController {
   constructor(private indemnityService: IndemnityService) {}
 
   @MessagePattern({ cmd: 'create-new-indemnity' })
-  async handleCreateIndemnity(dto: IndemnityDto) {
-    return this.indemnityService.createNewIndemnity(dto);
+  async handleCreateIndemnity(payload: {
+    data: IndemnityDto;
+    relatedFile: Express.Multer.File;
+  }) {
+    return this.indemnityService.createNewIndemnity(payload);
   }
 
   @MessagePattern({ cmd: 'get-all-indemnities-client' })

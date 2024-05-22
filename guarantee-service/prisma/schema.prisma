@@ -79,6 +79,7 @@ model Indemnity {
   indemnity_id Int             @id @default(autoincrement())
   status       IndemnityStatus @default(PENDING)
   reason       String?
+  relatedFile  String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -7,10 +7,9 @@ export class IndemnityService {
     @Inject('GUARANTEE_CLIENT') private guaranteeClient: ClientProxy,
   ) {}
 
-  createNewIndemnity(req: Request) {
+  createNewIndemnity(req: Request, relatedFile: Express.Multer.File) {
     const pattern = { cmd: 'create-new-indemnity' };
-    const payload = req.body;
-    console.log(payload);
+    const payload = { data: req.body, relatedFile };
     return this.guaranteeClient.send(pattern, payload);
   }
 
