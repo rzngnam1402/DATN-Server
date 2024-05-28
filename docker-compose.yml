@@ -1,0 +1,97 @@
+version: "3.8"
+services:
+  api-gateway:
+    build: ./api-gateway
+    networks:
+      - server
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./api-gateway/:/usr/src/api-gateway
+    environment:
+      USER_HOST: user
+    depends_on:
+      - user-service
+      - application-service
+      - guarantee-service
+
+  user-service:
+    build: ./user-service
+    networks:
+      - server
+    volumes:
+      - ./user-service/:/usr/src/user-service
+    ports:
+      - "8888:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@user-db:5432/userdb
+    depends_on:
+      - user-db
+
+  application-service:
+    build: ./application-processing-service
+    networks:
+      - server
+    volumes:
+      - ./application-processing-service/:/usr/src/application-processing-service
+    ports:
+      - "8889:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@application-db:5432/applicationdb
+    depends_on:
+      - application-db
+
+  guarantee-service:
+    build: ./guarantee-service
+    networks:
+      - server
+    volumes:
+      - ./guarantee-service/:/usr/src/guarantee-service
+    ports:
+      - "8890:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:password@guarantee-db:5432/guaranteedb
+    depends_on:
+      - guarantee-db
+
+  user-db:
+    image: postgres:13
+    networks:
+      - server
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+
+  application-db:
+    image: postgres:13
+    networks:
+      - server
+    environment:
+      POSTGRES_DB: applicationdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - application-db-data:/var/lib/postgresql/data
+
+  guarantee-db:
+    image: postgres:13
+    networks:
+      - server
+    environment:
+      POSTGRES_DB: guaranteedb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - guarantee-db-data:/var/lib/postgresql/data
+
+volumes:
+  user-db-data:
+  application-db-data:
+  guarantee-db-data:
+
+networks:
+  server:
+    driver: bridge

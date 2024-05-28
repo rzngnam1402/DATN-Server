@@ -5,6 +5,7 @@ import { RolesGuard } from '../guard';
 import { Role } from '../role/roles.enum';
 import { Roles } from '../decorator/role.decorator';
 import { GetToken } from '../decorator/get-token.decorator';
+import { Request } from 'express';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('users')

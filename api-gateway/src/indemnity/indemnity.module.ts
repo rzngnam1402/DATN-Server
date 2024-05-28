@@ -10,7 +10,7 @@ import { IndemnityService } from './indemnity.service';
         name: 'GUARANTEE_CLIENT',
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
+          host: 'guarantee-service',
           port: 8890,
         },
       },

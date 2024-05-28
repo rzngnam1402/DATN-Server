@@ -13,6 +13,7 @@ import { GuaranteeService } from './guarantee.service';
 import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
 import { RolesGuard } from 'src/auth/guard';
+import { Request } from 'express';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('guarantee')
