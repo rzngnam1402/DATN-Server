@@ -13,6 +13,7 @@ import { RolesGuard } from 'src/auth/guard';
 import { Role } from 'src/auth/role/roles.enum';
 import { GetUser } from 'src/auth/decorator';
 import { IndemnityService } from './indemnity.service';
+import { Request } from 'express';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('indemnity')

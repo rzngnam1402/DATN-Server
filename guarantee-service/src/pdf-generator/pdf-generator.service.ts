@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as fs from 'fs';
-import * as pdf from 'pdf-creator-node';
 import * as path from 'path';
 import * as admin from 'firebase-admin';
-import { PDF_OPTIONS } from './configs/option.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { formatMoney, readMoney } from 'src/utils/money.utils';
 import { readDate } from 'src/utils/date.utils';
+import puppeteer from 'puppeteer';
 
 @Injectable()
 export class PdfGeneratorService {
@@ -38,34 +37,52 @@ export class PdfGeneratorService {
       ApplicantDetail,
       BeneficiaryDetail,
     } = guarantee;
-    ApplicantDetail.businessName = ApplicantDetail.businessName.toUpperCase();
-    BeneficiaryDetail.businessName =
+    const applicantBusinessName = ApplicantDetail.businessName.toUpperCase();
+    const beneficiaryBusinessName =
       BeneficiaryDetail.businessName.toUpperCase();
 
     const html = fs.readFileSync(
       path.join(process.cwd(), './src/pdf-generator/templates/template.html'),
       'utf-8',
     );
-    const document = {
-      html: html,
-      data: {
-        guarantee_id,
-        applicant_detail_id,
-        beneficiary_detail_id,
-        bankName,
-        amount: formatMoney(amount),
-        moneyText: readMoney(Number(amount), currency),
-        currency,
-        startDate: readDate(startDate),
-        expiryDate: readDate(expiryDate),
-        docURL,
-        ApplicantDetail,
-        BeneficiaryDetail,
-      },
-      type: 'buffer',
-    };
 
-    const pdfBuffer = await pdf.create(document, PDF_OPTIONS);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.setContent(
+      html.replace(/\{\{([^}]+)\}\}/g, (_, key) => {
+        return {
+          guarantee_id,
+          applicant_detail_id,
+          beneficiary_detail_id,
+          bankName,
+          amount: formatMoney(amount),
+          moneyText: readMoney(Number(amount), currency),
+          currency,
+          startDate: readDate(startDate),
+          expiryDate: readDate(expiryDate),
+          docURL,
+          applicantBusinessName,
+          applicantBusinessRegistrationNumber:
+            ApplicantDetail.businessRegistrationNumber,
+          applicantContactPersonName: ApplicantDetail.contactPersonName,
+          applicantBusinessAddress: ApplicantDetail.businessAddress,
+          applicantEmail: ApplicantDetail.applicantEmail,
+          beneficiaryBusinessName,
+          beneficiaryBusinessRegistrationNumber:
+            BeneficiaryDetail.businessRegistrationNumber,
+          beneficiaryBusinessAddress: BeneficiaryDetail.businessAddress,
+          beneficiaryEmail: BeneficiaryDetail.email,
+        }[key];
+      }),
+    );
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+    });
+
+    await browser.close();
+
     const fileName = `guarantee-documents/${guarantee_id}-${applicant_detail_id}-${beneficiary_detail_id}.pdf`;
     const fileRef = this.firebaseAdmin.storage().bucket().file(fileName);
     await fileRef.save(pdfBuffer, {
@@ -76,7 +93,6 @@ export class PdfGeneratorService {
     });
 
     await fileRef.makePublic();
-
     const publicUrl = fileRef.publicUrl();
 
     if (!docURL) {

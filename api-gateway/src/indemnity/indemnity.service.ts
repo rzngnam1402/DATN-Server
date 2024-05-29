@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { Request } from 'express';
 
 @Injectable()
 export class IndemnityService {
@@ -10,7 +11,6 @@ export class IndemnityService {
   createNewIndemnity(req: Request) {
     const pattern = { cmd: 'create-new-indemnity' };
     const payload = req.body;
-    console.log(payload);
     return this.guaranteeClient.send(pattern, payload);
   }
 

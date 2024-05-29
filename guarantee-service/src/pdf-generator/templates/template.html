@@ -9,7 +9,13 @@
         margin: 0;
         padding: 0;
       }
-
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
       body {
         font-family: 'Times New Roman', Times, serif;
         color: #333;
@@ -20,7 +26,7 @@
       .container {
         margin: auto;
         padding: 20px 65px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
       }
 
       .header {
@@ -45,13 +51,13 @@
       }
 
       .signature {
-        margin-bottom: 90px;
+        margin-bottom: 12rem;
         text-align: right;
         font-style: italic;
       }
 
       .section-title {
-        font-size: 14px;
+        font-size: 18px;
         color: #444;
         font-weight: bold;
       }
@@ -73,6 +79,14 @@
         text-align: center;
       }
 
+      .section-description {
+        margin-bottom: 2rem;
+      }
+
+      .mb-2 {
+        margin-bottom: 2rem;
+      }
+
       .bold {
         font-weight: bold;
       }
@@ -81,7 +95,7 @@
         text-align-last: left;
       }
       .bylaws {
-        font-size: 8px;
+        font-size: 14px;
       }
     </style>
   </head>
@@ -93,7 +107,7 @@
         <p>------------------------------------------------------</p>
       </div>
       <div class="content">
-        <div class="content-header">
+        <div class="content-header mb-2">
           <h1 class="title">Letter of Guarantee</h1>
           <p>
             Reference Number:
@@ -101,66 +115,79 @@
           </p>
         </div>
         <p class="section-title">Guaranteed Party:</p>
-        <div>
-          <p>{{ApplicantDetail.businessName}}</p>
+        <div class="section-description">
+          <p>{{applicantBusinessName}}</p>
           <p>
             Business Registration Number:
-            {{ApplicantDetail.businessRegistrationNumber}}
+            {{applicantBusinessRegistrationNumber}}
           </p>
-          <p>Address: {{ApplicantDetail.businessAddress}}</p>
-          <p>Representative: {{ApplicantDetail.contactPersonName}}</p>
-          <p>Email: {{ApplicantDetail.applicantEmail}}</p>
+          <p>Address: {{applicantBusinessAddress}}</p>
+          <p>Representative: {{applicantContactPersonName}}</p>
+          <p>Email: {{applicantEmail}}</p>
         </div>
 
         <p class="section-title">Beneficiary Party:</p>
-        <div>
-          <p>{{BeneficiaryDetail.businessName}}</p>
+        <div class="section-description">
+          <p>{{beneficiaryBusinessName}}</p>
           <p>
             Business Registration Number:
-            {{BeneficiaryDetail.businessRegistrationNumber}}
+            {{beneficiaryBusinessRegistrationNumber}}
           </p>
-          <p>Address: {{BeneficiaryDetail.businessAddress}}</p>
-          <p>Email: {{BeneficiaryDetail.email}}</p>
-          <p class="section-title">Guarantee Details:</p>
-          <div class="bylaws">
-            <p class="justified">
-              We, {{bankName}} (Guarantor) hereby agree to provide a guarantee
-              to the beneficiary with a value of
-              <span class="bold">
-                {{currency}} {{amount}} ({{moneyText}})
-              </span>
-              to secure the payment obligations of the guaranteed party to the
-              beneficiary. This document constitutes the sole original guarantee
-              and is not transferable.
-            </p>
-            <p>
-              This guarantee is effective from
-              <span class="bold"> {{startDate}}, </span>
-              until 23:59 on
-              <span class="bold"> {{expiryDate}}. </span>
-            </p>
-            <p class="justified">
-              We hereby commit to not arbitrarily cancel and affirm that we
-              shall act on behalf of the guaranteed party to assume
-              responsibility for payment to the guarantee recipient of an amount
-              up to the stated guarantee value. All requests related to this
-              guarantee must be presented to the guarantor within the validity
-              period of this Guarantee Letter along with the original Guarantee
-              Letter.
-            </p>
-          </div>
-          <div class="notice justified">
-            <p>
-              This guarantee is governed and interpreted in accordance with the
-              laws of Vietnam. Any disputes related to this Guarantee Letter
-              will be resolved by the parties through mediation and good faith
-              negotiation. If the parties fail to reach an agreement, disputes
-              will be settled by a competent court.
-            </p>
-          </div>
-          <div class="signature">
-            <p>On behalf of {{ bankName }}</p>
-          </div>
+          <p>Address: {{beneficiaryBusinessAddress}}</p>
+          <p>Email: {{beneficiaryEmail}}</p>
+        </div>
+        <p class="section-title">Guarantee Details:</p>
+
+        <div class="bylaws section-description">
+          <p class="justified">
+            We, {{bankName}} (Guarantor) hereby agree to provide a guarantee to
+            the beneficiary with a value of
+            <span class="bold"> {{currency}} {{amount}} ({{moneyText}}) </span>
+            to secure the payment obligations of the guaranteed party to the
+            beneficiary. This document constitutes the sole original guarantee
+            and is not transferable.
+          </p>
+          <p>
+            This guarantee is effective from
+            <span class="bold"> {{startDate}}, </span>
+            until 23:59 on
+            <span class="bold"> {{expiryDate}}. </span>
+          </p>
+          <p class="justified">
+            We hereby commit to not arbitrarily cancel and affirm that we shall
+            act on behalf of the guaranteed party to assume responsibility for
+            payment to the guarantee recipient of an amount up to the stated
+            guarantee value. All requests related to this guarantee must be
+            presented to the guarantor within the validity period of this
+            Guarantee Letter along with the original Guarantee Letter.
+          </p>
+          <p class="justified">
+            This Guarantee is issued solely to the Beneficiary and may not be
+            transferred or assigned without the prior written consent of the
+            Guarantor. All parties agree to keep the terms and the existence of
+            this Guarantee confidential, except as required by law or as
+            necessary for the enforcement of the same. A person who is not a
+            party to this Independent Guarantee has no right under the Contracts
+            (Rights of Third Parties) Act 2001 to enforce any term of this
+            Independent Guarantee.
+          </p>
+          <p>
+            This guarantee is governed and interpreted in accordance with the
+            laws of Vietnam. Any disputes related to this Guarantee Letter will
+            be resolved by the parties through mediation and good faith
+            negotiation. If the parties fail to reach an agreement, disputes
+            will be settled by a competent court.
+          </p>
+          <p>
+            Each party irrevocably agrees that the courts of the Vietnam shall
+            have exclusive jurisdiction to settle any dispute, claim, question
+            or disagreement arising out of or relating to this Independent
+            Guarantee or its subject matter or formation. Each party irrevocably
+            submits to the jurisdiction of such courts.
+          </p>
+        </div>
+        <div class="signature">
+          <p>On behalf of {{bankName}}</p>
         </div>
       </div>
     </div>
