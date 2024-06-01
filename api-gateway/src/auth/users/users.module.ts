@@ -11,7 +11,7 @@ import { UsersController } from './users.controller';
         name: 'AUTH_CLIENT',
         transport: Transport.TCP,
         options: {
-          host: '127.0.0.1',
+          host: 'user-service',
           port: 8888,
         },
       },

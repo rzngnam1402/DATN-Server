@@ -46,7 +46,9 @@ export class PdfGeneratorService {
       'utf-8',
     );
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      executablePath: '/usr/bin/chromium-browser',
+    });
     const page = await browser.newPage();
 
     await page.setContent(
