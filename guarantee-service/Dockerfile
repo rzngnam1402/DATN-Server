@@ -4,6 +4,9 @@ WORKDIR /usr/src/guarantee-service
 
 COPY --chown=node:node package*.json ./
 
+# install python and chrome
+RUN apk add --no-cache python3 make g++ chromium chromium-chromedriver
+
 RUN npm i
 
 COPY --chown=node:node . .
