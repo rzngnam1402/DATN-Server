@@ -18,7 +18,7 @@ export class GuaranteeService {
         expiryDate,
         startDate,
         purpose: dto.purpose,
-        status: Status.NOT_ISSUED,
+        status: Status.UNCHECKED,
 
         // Relational data
         ApplicantDetail: {
