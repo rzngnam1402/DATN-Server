@@ -7,6 +7,40 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class GuaranteeService {
   constructor(private prisma: PrismaService) {}
+
+  async handleGetStats() {
+    try {
+      const count = await this.prisma.guarantee.count();
+      const bankNames = await this.prisma.guarantee.findMany({
+        distinct: ['bankName'],
+        select: {
+          bankName: true,
+        },
+      });
+      const latestIssuedGuarantee = await this.prisma.guarantee.findMany({
+        where: {
+          status: 'ISSUED',
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        take: 4,
+        select: {
+          guarantee_id: true,
+          bankName: true,
+          amount: true,
+          createdAt: true,
+        },
+      });
+      const banksCount = bankNames.length;
+      const data = { count, banksCount, latestIssuedGuarantee };
+      return data;
+    } catch (error) {
+      console.error('Error counting unique guarantees:', error);
+      throw error;
+    }
+  }
+
   handleCreate(dto: GuaranteeDto) {
     try {
       const expiryDate = new Date(dto.effectiveDate);

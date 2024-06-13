@@ -26,6 +26,12 @@ export class ApplicationService {
     return this.applicationClient.send(pattern, payload);
   }
 
+  getStats() {
+    const pattern = { cmd: 'get-stats' };
+    const payload = {};
+    return this.applicationClient.send(pattern, payload);
+  }
+
   getAllApplicationsUser(user: any) {
     const pattern = { cmd: 'get-all-apps-user' };
     const payload = user.email;

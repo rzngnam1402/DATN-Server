@@ -18,6 +18,12 @@ export class UsersService {
     return this.authClient.send(pattern, payload);
   }
 
+  getStats() {
+    const pattern = { cmd: 'get-user-stats' };
+    const payload = {};
+    return this.authClient.send(pattern, payload);
+  }
+
   addSignature(data: Request) {
     const pattern = { cmd: 'add-signature' };
     const payload = data.body;

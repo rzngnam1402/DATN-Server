@@ -32,6 +32,12 @@ export class GuaranteeController {
     return this.guaranteeService.createGuarantee(req);
   }
 
+  @Roles(Role.ADMIN)
+  @Get('stats')
+  getStats() {
+    return this.guaranteeService.getStats();
+  }
+
   @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
   @Get(':id')
   async getGuaranteeById(@Param('id') id: string) {

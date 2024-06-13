@@ -29,6 +29,12 @@ export class ApplicationController {
     return this.applicationService.pingApplicationService();
   }
 
+  @Roles(Role.ADMIN)
+  @Get('stats')
+  getStats() {
+    return this.applicationService.getStats();
+  }
+
   @Roles(Role.CLIENT, Role.ADMIN)
   @Post('create')
   @UseInterceptors(AnyFilesInterceptor())

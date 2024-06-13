@@ -8,6 +8,17 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export class ApplicationService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async handleGetStats() {
+    try {
+      const count = await this.prisma.application.count();
+      const data = { count };
+      return data;
+    } catch (error) {
+      console.error('Error counting unique applications:', error);
+      throw error;
+    }
+  }
+
   async create(dto: ApplicationDto, collateralFile: Express.Multer.File[]) {
     const effectiveDate = new Date(dto.effectiveDate);
     let file = null;

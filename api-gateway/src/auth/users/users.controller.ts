@@ -30,6 +30,12 @@ export class UsersController {
     return this.userService.getSignature(data);
   }
 
+  @Roles(Role.ADMIN)
+  @Get('stats')
+  getStats() {
+    return this.userService.getStats();
+  }
+
   @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
   @Patch('signature')
   addSignature(@Req() data: Request) {

@@ -3,14 +3,14 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const updatedGuarantee = await prisma.guarantee.update({
-    where: { guarantee_id: 2 },
+  const updatedApplication = await prisma.application.update({
+    where: { application_id: 1 },
     data: {
-      bankName: 'Tien Phong Bank',
+      bankName: 'Techcombank',
     },
   });
 
-  console.log({ updatedGuarantee });
+  console.log({ updatedApplication });
 }
 
 main()

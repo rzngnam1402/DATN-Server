@@ -11,6 +11,11 @@ export class GuaranteeController {
     return this.guaranteeService.handleCreate(data);
   }
 
+  @MessagePattern({ cmd: 'get-guarantee-stats' })
+  async handleGetStats() {
+    return this.guaranteeService.handleGetStats();
+  }
+
   @MessagePattern({ cmd: 'get-all-guarantees-banker' })
   async handleGetAllGuaranteesBanker(company: string) {
     return this.guaranteeService.getAllGuaranteesBanker(company);

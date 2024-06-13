@@ -15,6 +15,12 @@ export class UserController {
   async handleGetAllUsers() {
     return this.userService.getAllUsers();
   }
+
+  @MessagePattern({ cmd: 'get-user-stats' })
+  async handleGetStats() {
+    return this.userService.handleGetStats();
+  }
+
   @MessagePattern({ cmd: 'get-signature' })
   async handleGetSignature(data: any) {
     return this.userService.getSignature(data);

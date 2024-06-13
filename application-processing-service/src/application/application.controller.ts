@@ -20,6 +20,11 @@ export class ApplicationController {
     return this.applicationService.getAllApplicationsUser(data);
   }
 
+  @MessagePattern({ cmd: 'get-stats' })
+  handleGetStats() {
+    return this.applicationService.handleGetStats();
+  }
+
   @MessagePattern({ cmd: 'get-all-apps-banker' })
   handleGetAllApplicationsBanker(payload: string) {
     const data = payload;

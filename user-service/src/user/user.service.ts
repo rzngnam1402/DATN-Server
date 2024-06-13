@@ -26,6 +26,17 @@ export class UserService {
     return allUsers;
   }
 
+  async handleGetStats() {
+    try {
+      const count = await this.prisma.user.count();
+      const data = { count };
+      return data;
+    } catch (error) {
+      console.error('Error counting unique users:', error);
+      throw error;
+    }
+  }
+
   async getSignature(data: { email: string }) {
     try {
       const res = await this.prisma.user.findFirstOrThrow({

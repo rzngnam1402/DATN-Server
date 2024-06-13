@@ -32,6 +32,12 @@ export class GuaranteeService {
     return this.guaranteeClient.send(pattern, payload);
   }
 
+  getStats() {
+    const pattern = { cmd: 'get-guarantee-stats' };
+    const payload = {};
+    return this.guaranteeClient.send(pattern, payload);
+  }
+
   getGuaranteeById(id: string) {
     const pattern = { cmd: 'get-guarantee-by-id' };
     const payload = Number(id);
