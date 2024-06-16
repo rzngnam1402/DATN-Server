@@ -30,4 +30,9 @@ export class UserController {
   async handleAddSignature(data: { id: string; signature: string }) {
     return this.userService.addSignature(data);
   }
+
+  @MessagePattern({ cmd: 'update-user-role' })
+  async updateUserRole(data: { id: string; newRole: string }) {
+    return this.userService.updateUserRole(data);
+  }
 }

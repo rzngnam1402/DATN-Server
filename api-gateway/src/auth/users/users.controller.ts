@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Req, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtGuard } from '../guard/jwt.guard';
 import { RolesGuard } from '../guard';
@@ -18,7 +18,7 @@ export class UsersController {
     return this.userService.getMe(token);
   }
 
-  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Roles(Role.ADMIN)
   @Get('all')
   getAll() {
     return this.userService.getAll();
@@ -36,9 +36,15 @@ export class UsersController {
     return this.userService.getStats();
   }
 
-  @Roles(Role.CLIENT, Role.BANKER, Role.ADMIN)
+  @Roles(Role.ADMIN)
   @Patch('signature')
   addSignature(@Req() data: Request) {
     return this.userService.addSignature(data);
+  }
+
+  @Roles(Role.ADMIN)
+  @Patch('update/role/:id')
+  updateUserRole(@Param('id') id: string, @Req() data: Request) {
+    return this.userService.updateUserRole(id, data);
   }
 }

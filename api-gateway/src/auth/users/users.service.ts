@@ -35,4 +35,10 @@ export class UsersService {
     const payload = data.body;
     return this.authClient.send(pattern, payload);
   }
+
+  updateUserRole(id: string, data: Request) {
+    const pattern = { cmd: 'update-user-role' };
+    const payload = { id, newRole: data.body.newRole };
+    return this.authClient.send(pattern, payload);
+  }
 }

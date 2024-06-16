@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from '@prisma/client';
 import { AuthService } from 'src/auth/auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -48,6 +49,25 @@ export class UserService {
     } catch (err) {
       console.log(err);
       return err;
+    }
+  }
+
+  async updateUserRole(data: { id: string; newRole: string }) {
+    const { id, newRole } = data;
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          role: newRole as Role,
+        },
+      });
+      console.log('User updated:', updatedUser);
+      return updatedUser;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return error;
     }
   }
 
