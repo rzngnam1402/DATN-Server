@@ -11,4 +11,7 @@ export class IndemnityDto {
 
   @IsString()
   guarantee_id: string;
+
+  @IsOptional()
+  relatedFile: Express.Multer.File[];
 }

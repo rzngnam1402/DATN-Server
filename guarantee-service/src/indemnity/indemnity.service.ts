@@ -1,17 +1,33 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { IndemnityDto } from 'src/dto/indemnity.dto';
+import { PdfGeneratorService } from 'src/pdf-generator/pdf-generator.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class IndemnityService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private pdfService: PdfGeneratorService,
+  ) {}
 
   async createNewIndemnity(dto: IndemnityDto) {
+    let fileURL = null;
+    if (dto.relatedFile) {
+      const file = dto.relatedFile[0];
+      const buffer = Buffer.from(file.buffer);
+      fileURL = await this.pdfService.uploadBuffer(
+        buffer,
+        `indemnity_document/${dto.guarantee_id}`,
+        'application/pdf',
+      );
+    }
+
     const indemnity = await this.prisma.indemnity.create({
       data: {
         guarantee_id: Number(dto.guarantee_id),
         reason: dto.reason,
+        relatedFile: dto.relatedFile ? fileURL : null,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

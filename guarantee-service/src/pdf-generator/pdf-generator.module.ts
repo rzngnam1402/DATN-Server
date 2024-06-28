@@ -5,5 +5,6 @@ import { PdfGeneratorController } from './pdf-generator.controller';
 @Module({
   providers: [PdfGeneratorService],
   controllers: [PdfGeneratorController],
+  exports: [PdfGeneratorService],
 })
 export class PdfGeneratorModule {}

@@ -5,7 +5,9 @@ import {
   Patch,
   Post,
   Req,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Roles } from 'src/auth/decorator/role.decorator';
 import { JwtGuard } from 'src/auth/guard/jwt.guard';
@@ -14,6 +16,7 @@ import { Role } from 'src/auth/role/roles.enum';
 import { GetUser } from 'src/auth/decorator';
 import { IndemnityService } from './indemnity.service';
 import { Request } from 'express';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('indemnity')
@@ -22,8 +25,12 @@ export class IndemnityController {
 
   @Roles(Role.CLIENT, Role.ADMIN)
   @Post('create-new')
-  createIndemnity(@Req() req: Request) {
-    return this.indemnitySerivce.createNewIndemnity(req);
+  @UseInterceptors(AnyFilesInterceptor())
+  createIndemnity(
+    @Req() req: Request,
+    @UploadedFiles() relatedFile: Express.Multer.File,
+  ) {
+    return this.indemnitySerivce.createNewIndemnity(req, relatedFile);
   }
 
   @Roles(Role.CLIENT, Role.ADMIN)
